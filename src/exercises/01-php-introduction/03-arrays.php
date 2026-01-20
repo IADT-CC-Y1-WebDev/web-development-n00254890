@@ -27,6 +27,13 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $movie = ['Scream 1','Scream 2','Fnaf 1','Fnaf 2','Scream 5'];
+        echo "<ul>";
+        for($i = 0; $i < count($movie); $i++) {
+            $movienum = $i+1;
+            echo "<li>Movie $movienum: $movie[$i]</li>";
+        }
+        echo"</ul>";
         ?>
     </div>
 
@@ -42,6 +49,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $student = [
+            "name" => "Kayleigh Nolan",
+            "studentId" => "n00254890",
+            "course" => "creative computing",
+            "grade" => "b+",
+        ];
+
+        echo "<ul>";
+         echo "<li> Students name is: {$student['name']} </li>";
+         echo "<li> Students Id is: {$student['studentId']} </li>";
+         echo "<li> Students course is: {$student['course']}</li>";
+         echo "<li> Students grade is: {$student['grade']}</li>";
+         echo "</ul>";
         ?>
     </div>
 
@@ -58,6 +78,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $countries = [
+            "Ireland" => "Dublin",
+            "Germany" => "Berlin",
+            "France" => "Paris",
+            "Romania" => "Bucharest",
+            "Bulgaria" => "Sofia",
+        ];
+
+        echo "<ul>";
+        foreach($countries as $country => $capital) {
+            echo "<li> The capital of $country is $capital";
+        }
+        echo "<ul>";
         ?>
     </div>
 
@@ -75,6 +108,32 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $menu = [
+            'starters' => [
+                'garlic bread' => "6.99",
+                'soup' => "5.99",
+                'bruschetta' => "8.00",
+            ],
+            'mains' => [
+                'spaghetti bolognaise' => "12.99",
+                'Carbonara' => "15.99",
+                'Pepperoni pizza' => "14.00",
+            ],
+            'dessert' => [
+                'vanilla icecream' => "4.99",
+                'brownie' => "5.00",
+                'apple crumble' => "6.99",
+            ],
+        ];
+        echo "<ul>";
+        foreach ($menu as $section => $items) {
+            echo "($section)";
+            echo "</ul>";
+            foreach ($items as $meal => $price) {
+                echo "<li>$meal ($price)</li>";
+            }
+            echo"</ul>";
+        }
         ?>
     </div>
 
