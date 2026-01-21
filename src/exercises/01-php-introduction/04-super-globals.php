@@ -27,6 +27,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        echo "<ul>";
+        echo "<li>PHP_SELF:</li>";
+        echo $_SERVER['PHP_SELF'];
+        echo "<li>REQUEST_METHOD:</li>";
+        echo $_SERVER['REQUEST_METHOD'];
+        echo "<li>HTTP_HOST:</li>";
+        echo  $_SERVER['HTTP_HOST'];
+        echo "<li>HTTP_USER_AGENT:</li>";
+        echo $_SERVER['HTTP_USER_AGENT'];
         ?>
     </div>
 
@@ -43,6 +52,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        if (isset($_GET['name'])) {
+          echo "Hello".($_GET['name'])."!";
+      } else {
+       echo 'Hello Guest!';
+      }
+        
         ?>
     </div>
 
