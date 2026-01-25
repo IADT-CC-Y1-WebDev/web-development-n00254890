@@ -22,6 +22,9 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require_once "inc/navigation.php";
+        echo "<br>";
+        require_once "inc/navigation.php";
         ?>
     </div>
 
@@ -33,7 +36,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        ?>
+        require_once 'lib/utilities.php';
+        $longText = "This is a very long sentence that doesnt stop going and going and going .";
+         echo "<p>Truncate: " . truncate($longText, 20) . "</p>";
+
+        $price = 1234.567;
+         echo "<p>Formatted Price: " . formatPrice($price) . "</p>";
+
+         echo "<p>Current Year: " . getCurrentYear() . "</p>";
+         ?>
     </div>
 
     <!-- Exercise 3 -->
@@ -44,6 +55,17 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require_once 'lib/validators.php';
+        require_once 'lib/formatters.php';
+        $email1 = "n00254890@iadt.ie";
+        $email2 = "invalid-email";
+          echo "<p>Email '$email1' is " . (isValidEmail($email1) ? "valid" : "invalid") . ".</p>";
+           echo "<p>Email '$email2' is " . (isValidEmail($email2) ? "valid" : "invalid") . ".</p>";
+
+        $phone1 = "1234567890";
+        $phone2 = "911";
+          echo "<p>Formatted phone: " . formatPhoneNumber($phone1) . "</p>";
+          echo "<p>Formatted phone: " . formatPhoneNumber($phone2) . "</p>";
         ?>
     </div>
 
