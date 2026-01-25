@@ -25,6 +25,13 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function celsiusToFahrenheit($celsius) {
+            return ($celsius * 9/5) + 32;
+        }
+        echo "0°C = " . celsiusToFahrenheit(0) . "°F<br>";
+        echo "20°C = " . celsiusToFahrenheit(20) . "°F<br>";
+        echo "32°C = " . celsiusToFahrenheit(32) . "°F<br>";
+        echo "67°C = " . celsiusToFahrenheit(67) . "°F<br>";
         ?>
     </div>
 
@@ -41,6 +48,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+     function calculateRectangleArea($width, $height = null) {
+        if ($height === null) {
+            $height = $width;
+        }
+
+        return $width * $height;
+    }
+    echo "Area of square: " . calculateRectangleArea(5) . "<br>";
+    echo "Area of rectangle: " . calculateRectangleArea(2, 6) . "<br>";
         ?>
     </div>
 
@@ -57,6 +73,10 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function checkEvenOdd($number) {
+            return ($number % 2 === 0) ? "Even" : "Odd";
+        }
+        echo "Number is " . checkEvenOdd(4) . "<br>";
         ?>
     </div>
 
@@ -73,6 +93,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function getArrayStats($numbers) {
+            $min = min($numbers);
+            $max = max($numbers);
+            $average = array_sum($numbers) / count($numbers);
+            return [$min, $max, $average];
+        }
+        $stats = getArrayStats([3, 5, 7, 2, 8]);
+        list($min, $max, $average) = $stats;
+        echo "Min: $min, Max: $max, Average: $average";
         ?>
     </div>
 

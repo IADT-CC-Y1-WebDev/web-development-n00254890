@@ -75,6 +75,25 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+    if (isset($_GET['product']) && isset($_GET['quantity'])) {
+        $product = ($_GET['product']);
+        $quantity = ($_GET['quantity']);
+          if ($product === '') {
+        echo "Error: Product name is empty.";
+    } elseif (!is_numeric($quantity) || $quantity <= 0) {
+        echo "Error: Quantity must be a positive number.";
+    } else {
+        echo "You ordered " . htmlspecialchars($quantity) . " " . htmlspecialchars($product) . "(s).";
+    }
+} else {
+    if (!isset($_GET['product']) && !isset($_GET['quantity'])) {
+        echo "Error: Missing product and quantity parameters.";
+    } elseif (!isset($_GET['product'])) {
+        echo "Error: Missing product parameter.";
+    } elseif (!isset($_GET['quantity'])) {
+        echo "Error: Missing quantity parameter.";
+    }
+}
         ?>
     </div>
 
