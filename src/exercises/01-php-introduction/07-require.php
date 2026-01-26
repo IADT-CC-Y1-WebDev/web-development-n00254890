@@ -12,6 +12,12 @@
         <a href="/examples/01-php-introduction/07-require.php">View Example &rarr;</a>
     </div>
 
+    <div class ="">
+        <?php
+        require_once "inc/navigation.php"; 
+        ?>
+    </div>
+
     <h1>Libraries Exercises</h1>
 
     <!-- Exercise 1 -->
@@ -22,9 +28,7 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        require_once "inc/navigation.php";
-        echo "<br>";
-        require_once "inc/navigation.php";
+        require "inc/navigation.php";
         ?>
     </div>
 
@@ -36,7 +40,7 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        require_once 'lib/utilities.php';
+        require 'lib/utilities.php';
         $longText = "This is a very long sentence that doesnt stop going and going and going .";
          echo "<p>Truncate: " . truncate($longText, 20) . "</p>";
 
@@ -68,6 +72,10 @@
           echo "<p>Formatted phone: " . formatPhoneNumber($phone2) . "</p>";
         ?>
     </div>
-
+    <div class ="">
+        <?php
+        require "inc/navigation.php"; 
+        ?>
+        </div>
 </body>
 </html>
