@@ -37,13 +37,14 @@
         // Step 3: Create a student and display their details
 
         require __DIR__ . '/classes/Student.php';
-        $studentaccount = new student ();
+            
+        $studentaccount = new Student ("Kayleigh Nolan", "n00254890");
 
-     $studentaccount -> name = "Kayleigh Nolan";
-    $studentaccount -> number = "n00254890";
+        // $studentaccount -> name = "Kayleigh Nolan";
+        // $studentaccount -> number = "n00254890";
 
-      echo "Student name: " . $studentaccount->name;
-      echo ", Student number: " . $studentaccount->number;
+        echo "Student name: " . $studentaccount->getName();
+        echo ", Student number: " . $studentaccount->getNumber();
         ?>
     </div>
 
@@ -63,14 +64,11 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Student.php';
+        require_once __DIR__ . '/classes/Student.php';
+        $studentaccount = new Student ("Kayleigh Nolan", "n00254890");
 
-         require_once __DIR__ . '/classes/student2.php';
-        
-        $studentaccount = new student2 ("Kayleigh Nolan", "n00254890");
-
-        echo "Student name: " . $studentaccount->name;
-        echo ", student number: " . $studentaccount->number;
+        echo "Student name: " . $studentaccount->getName();
+        echo ", student number: " . $studentaccount->getNumber();
         ?>
     </div>
 
@@ -90,10 +88,9 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Student.php';
-        
-        require_once __DIR__ . '/classes/student3.php';
-       echo "Student " . $studentaccount->name . " has number " . $studentaccount->number;
+        require_once __DIR__ . '/classes/Student.php';
+
+        echo "Student " . $studentaccount->getName() . " has number " . $studentaccount->getNumber();
         ?>
     </div>
 
