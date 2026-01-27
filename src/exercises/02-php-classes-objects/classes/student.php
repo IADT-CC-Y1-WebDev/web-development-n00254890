@@ -4,10 +4,9 @@ class Student {
     protected $number;
 
     public function __construct($name, $num) {
-        if ($num == "") {
-            throw new Exception("Number cannot be empty");
-        }
+       
         $this->name = $name;
+         echo "Creating student: {$this->name}<br>";
         $this->number = $num;
     }
 
@@ -18,5 +17,9 @@ class Student {
     public function getNumber(): string {
         return $this->number;
     }
+
+     public function __toString() {
+        return "Student: {$this->name} {$this->number}";
+  }
 }
 ?>

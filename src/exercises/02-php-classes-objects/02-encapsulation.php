@@ -90,7 +90,6 @@
             echo "Error: " . $e->getMessage();
         }
 
-         require_once __DIR__ . '/classes/encapstudent3.php';
         ?>
     </div>
 
