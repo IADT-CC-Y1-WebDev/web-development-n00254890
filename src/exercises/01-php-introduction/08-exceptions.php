@@ -28,6 +28,27 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+     function calculateSquareRoot($number) {
+        if ($number <= 0) {
+            throw new Exception ("Cannot take square root of a negative number");
+        }
+        return sqrt ($number);
+     }
+      
+     try {
+        $result = calculateSquareRoot(16);
+        echo "Square root : $result <br>";
+
+         $result = calculateSquareRoot(25);
+        echo "Square root : $result <br>";
+
+        $result = calculateSquareRoot(-9);
+        echo "error";
+     }
+     catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+     }
+
         ?>
     </div>
 
@@ -45,6 +66,25 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+
+        function validateEmail($email) {
+           if (strpos($email, '@') === false) {
+                throw new Exception ("$email : Invalid - missing @ symbol <br>");
+            }
+            return "$email validated";
+        }
+
+        $testEmails = ["user@example.com","invalid-email","test@test.ie" ];
+
+        foreach ($testEmails as $email)
+         try {
+             $result = validateEmail($email);
+             echo "$result <br>";
+         }
+        catch (Exception $e) {
+             echo $e->getMessage();
+         }
+
         ?>
     </div>
 
@@ -61,6 +101,29 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+
+        function processFile($filename) {
+            if ($filename == "") {
+               throw new Exception ("error: filename empty<br>");
+            }
+            return "file name valid";
+        }
+
+        $testFiles = ["index.html", ""];
+
+        foreach ($testFiles as $filename) {
+            echo "Testing filename: $filename <br>";
+            try {
+                $result = processFile($filename);
+                echo "$result <br>";
+            }
+            catch (Exception $e) {
+               echo $e->getMessage();
+            }
+            finally {
+                echo "Processing complete <br>";
+            }
+        }
         ?>
     </div>
 
