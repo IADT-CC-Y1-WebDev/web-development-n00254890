@@ -6,12 +6,15 @@
 // =============================================================================
 
 // TODO Exercise 1: Start the session
-
+session_start();
 
 // TODO Exercise 2: Redirect to step 1 if quiz not started or not complete
 // Check if $_SESSION['food_quiz'] exists AND 'completed_at' is set
 // If not, redirect to step1.php
-
+if (!isset($_SESSION['food_quiz']) || !isset($_SESSION['food_quiz']['completed_at'])) {
+    header('Location: step1.php');
+    exit;
+}
 
 // Get quiz data (this is provided, but depends on your session being set up correctly)
 $answers = isset($_SESSION['food_quiz']['answers']) ? $_SESSION['food_quiz']['answers'] : [];

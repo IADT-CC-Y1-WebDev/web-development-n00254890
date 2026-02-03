@@ -35,12 +35,12 @@ setcookie('visit_count', $visitCount, $expiry, "/");
 // 3. Call exit; after the redirect
 // -----------------------------------------------------------------------------
 // TODO Exercise 3: Write your solution here
-// if (isset($_GET['reset'])) {
-//     setcookie('visit_count', '', time() - 3600, '/');
-//     setcookie('last_visit', '', time() - 3600, '/');
-//     header('Location: 01-visit-counter.php');
-//     exit;
-// }
+if (isset($_GET['reset'])) {
+    setcookie('visit_count', '', time() - 3600, '/');
+    setcookie('last_visit', '', time() - 3600, '/');
+     header('Location: 01-visit-counter.php');
+     exit;
+}
 
 // =============================================================================
 
@@ -51,9 +51,9 @@ setcookie('visit_count', $visitCount, $expiry, "/");
 // -----------------------------------------------------------------------------
 // TODO Exercise 4: Write your solution here
 
-// $lastVisit = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : null;
-// $currentTime = date('Y-m-d H:i:s');
-// setcookie('last_visit', $currentTime, $expiryTime, '/');
+ $lastVisit = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : null;
+ $currentTime = date('Y-m-d H:i:s');
+ setcookie('last_visit', $currentTime, $expiry, '/');
 
 // =============================================================================
 ?>
@@ -113,7 +113,14 @@ setcookie('visit_count', $visitCount, $expiry, "/");
         // - "Welcome back!" if visitCount is greater than or equal to 10
         // ---------------------------------------------------------------------
         // TODO Exercise 2: Write your solution here
-        
+        if ($visitCount === 1) {
+          echo "Welcome, first-time visitor!";
+        } elseif ($visitCount > 1 && $visitCount < 10) {
+          echo "Hello again!";
+        } else {
+          echo "Welcome back!";
+        }
+
         // =====================================================================
         ?>
     </div>
@@ -155,7 +162,11 @@ setcookie('visit_count', $visitCount, $expiry, "/");
         // Example output: "Your last visit was: 2024-01-15 10:30:45"
         // ---------------------------------------------------------------------
         // TODO Exercise 4: Write your solution here
-        
+       if ($lastVisit !== null) {
+         echo "<p>Last visit: " . date('Y-m-d H:i:s', (int)$lastVisit) . "</p>";
+        } else {
+         echo "<p>This is your first visit!</p>";
+        }
         // =====================================================================
         ?>
     </div>
