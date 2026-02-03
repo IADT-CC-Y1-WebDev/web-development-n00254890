@@ -6,7 +6,7 @@ class Student {
     public function __construct($name, $num) {
        
         $this->name = $name;
-         echo "Creating student: {$this->name}<br>";
+         echo "Creating student... {$this->name}<br>";
         $this->number = $num;
     }
 
