@@ -15,6 +15,16 @@
 // -----------------------------------------------------------------------------
 // TODO Exercise 1: Write your solution here
 
+if(isset($_COOKIE['visit_count'])){
+    $visitCount = $_COOKIE['visit_count'];
+}
+else {
+    $visitCount = 0;
+}
+
+$visitCount++;
+$expiry = time() +60 * 60 * 24 * 30;
+setcookie('visit_count', $visitCount, $expiry, "/");
 // =============================================================================
 
 // =============================================================================
@@ -25,6 +35,12 @@
 // 3. Call exit; after the redirect
 // -----------------------------------------------------------------------------
 // TODO Exercise 3: Write your solution here
+// if (isset($_GET['reset'])) {
+//     setcookie('visit_count', '', time() - 3600, '/');
+//     setcookie('last_visit', '', time() - 3600, '/');
+//     header('Location: 01-visit-counter.php');
+//     exit;
+// }
 
 // =============================================================================
 
@@ -34,6 +50,10 @@
 // 2. Set a new 'last_visit' cookie with the current timestamp
 // -----------------------------------------------------------------------------
 // TODO Exercise 4: Write your solution here
+
+// $lastVisit = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : null;
+// $currentTime = date('Y-m-d H:i:s');
+// setcookie('last_visit', $currentTime, $expiryTime, '/');
 
 // =============================================================================
 ?>
@@ -71,7 +91,7 @@
         // Exercise 1: Display the visit count
         // ---------------------------------------------------------------------
         // TODO Exercise 1: Write your solution here
-
+        echo "visit count = $visitCount";
         // =====================================================================
         ?>
     </div>
