@@ -12,10 +12,11 @@ startSession();
     <title>Success</title>
 </head>
 <body>
+    <?php require './inc/flash_message.php'; ?>
     <div class="back-link">
         <a href="index.php">&larr; Back to Form Handling </a>
     </div>
-
+     
     <h1>Success</h1>
 
     <!-- Display form data and errors for debugging purposes                 -->
