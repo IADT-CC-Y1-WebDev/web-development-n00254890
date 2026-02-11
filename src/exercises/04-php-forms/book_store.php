@@ -30,7 +30,7 @@ try {
     // See: /examples/04-php-forms/step-01-form-submission/
     // =========================================================================
     // TODO: First, just dump the posted data to see what's submitted
-    dd($_POST);
+    // dd($_POST);
 
     // =========================================================================
     // STEP 2: Check Request Method
@@ -59,10 +59,11 @@ try {
         'year'=> $_POST ['year'] ?? null,
         'isbn'=> $_POST ['isbn'] ?? null,
         'format_ids'=> $_POST ['format_ids'] ??[],
-        'description'=> $_POST ['description'] ?? null
+        'description'=> $_POST ['description'] ?? null,
+        'cover'=> $_FILES ['cover']?? null
     ];
      
-     dd($data);
+     // dd($data);
     // =========================================================================
     // STEP 4: Validate Data
     // See: /examples/04-php-forms/step-04-validation/
@@ -79,23 +80,24 @@ try {
         'year'=>  "required|nonempty|integer|minvalue:1900|maxvalue:" . $year,
         'isbn'=> "required|nonempty|min:13|max:13",
         'format_ids'=>"required|nonempty|array|min:1|max:4",
-        'description'=> "required|nonempty|min10"
+        'description'=> "required|nonempty|min10",
+        'cover'=>'required|file|image|mimes.jpg,jpeg,png|max_file_size:5242880'
       ];
     
       $validator = new Validator($data, $rules);
 
-      if ($validator->fails()) {
-        dd($validator->errors(), true);
-      }
        if ($validator->fails()) {
-        // Get first error for each field
-        foreach ($validator->errors() as $field => $fieldErrors) {
-            $errors[$field] = $fieldErrors[0];
+            // Get first error for each field
+            foreach ($validator->errors() as $field => $messages) {
+                $errors[$field] = $messages[0];
+            }
+            throw new Exception('Validation failed.');
         }
-        throw new Exception('Validation failed.');
-    }
-      echo"Validation successful!";
-      dd($data);
+        $uploader = new ImageUpload();
+        $imageFilename = $uploader->process($_FILES['cover']);
+
+      //echo"Validation successful!";
+      // dd($data);
     
     // =========================================================================
     // STEP 9: File Uploads
@@ -120,7 +122,8 @@ try {
     // See: /examples/04-php-forms/step-10-complete/
     // =========================================================================
     // TODO: Clear form data on success (before redirect)
-
+     clearFormData();
+     clearFormErrors();
 
     // =========================================================================
     // STEP 8: Flash Messages
@@ -128,6 +131,8 @@ try {
     // =========================================================================
     // TODO: On successful registration, set a success flash message and 
     // redirect back to the form
+
+    redirect("success.php");
 }
 catch (Exception $e) {
     // =========================================================================
