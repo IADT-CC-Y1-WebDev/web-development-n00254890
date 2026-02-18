@@ -47,6 +47,31 @@ catch (PDOException $e) {
             // 3. Execute with new description + timestamp
             // 4. Check rowCount()
             // 5. Fetch and display updated book
+
+            $stmt = $db->query("SELECT * FROM books ORDER BY title");
+            $books = $stmt->fetchAll();
+
+            $stmt = $db->prepare("
+            UPDATE books 
+            SET description = :description
+            WHERE id = :id
+            ");
+
+            $stmt ->execute([
+                'description' => 'To Kill a Mockingbird is a 1960 Southern novel by American author Harper Lee. (Updated: ' . date('H:i:s') .')' ,
+                'id' => 1
+            ]);
+
+            echo "Updated" . $stmt->rowCount() . " row(s)";
+
+            $showStmt = $db->prepare("SELECT title, description FROM books WHERE id = :id");
+            $showStmt->execute(['id' => 1]);
+            $book = $showStmt -> fetch();
+            if ($book) {
+                echo "<p><strong>Book:<?strong> " . htmlSpecialchars($book['title']) . "</p>";
+                echo "<p><strong>New description:<?strong> " . htmlSpecialchars($book['description']) . "</p>";
+            }
+
             ?>
         </div>
     </div>
