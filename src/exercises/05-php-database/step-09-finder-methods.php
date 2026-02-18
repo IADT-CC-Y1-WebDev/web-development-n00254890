@@ -26,6 +26,102 @@ require_once __DIR__ . '/lib/config.php';
             <li><code>findByPublisher($publisherId)</code> - Return array of Books</li>
         </ol>
 
+<div>
+    <?php 
+
+        class Book
+        {
+            // Public properties matching database columns
+            public $id;
+            public $title;
+            public $author;
+            public $publisher_id;
+            public $year;
+            public $isbn;
+            public $description;
+            public $cover_filename;
+
+            // Private database connection
+            private $db;
+
+            // Constructor - can accept data array to populate properties
+            public function __construct($data = [])
+            {
+                // Get database connection from singleton
+                $this->db = DB::getInstance()->getConnection();
+
+                // If data provided, populate properties
+                if (!empty($data)) {
+                    $this->id = $data['id'] ?? null;
+                    $this->title = $data['title'] ?? null;
+                    $this->author = $data['author'] ?? null;
+                    $this->publisher_id = $data['publisher_id'] ?? null;
+                    $this->year = $data['year'] ?? null;
+                    $this->description = $data['description'] ?? null;
+                    $this->cover_filename = $data['cover_filename'] ?? null;
+                }
+            }
+                // Find all books
+            public static function findAll()
+            {
+                $db = DB::getInstance()->getConnection();
+                $stmt = $db->prepare("SELECT * FROM books ORDER BY title");
+                $stmt->execute();
+
+                $books = [];
+                while ($row = $stmt->fetch()) {
+                    $books[] = new Book ($row);
+                }
+
+                return $books;
+            }
+
+            // Find game by ID
+            public static function findById($id)
+            {
+                $db = DB::getInstance()->getConnection();
+                $stmt = $db->prepare("SELECT * FROM books WHERE id = :id");
+                $stmt->execute(['id' => $id]);
+
+                $row = $stmt->fetch();
+                if ($row) {
+                    return new Book($row);
+                }
+
+                return null;
+            }
+
+            // Find games by genre
+            public static function findByPublisher($publisher_Id)
+            {
+                $db = DB::getInstance()->getConnection();
+                $stmt = $db->prepare("SELECT * FROM books WHERE publisher_id = :publisher_id ORDER BY title");
+                $stmt->execute(['publisher_id' => $publisher_Id]);
+
+                $games = [];
+                while ($row = $stmt->fetch()) {
+                    $books[] = new Book($row);
+                }
+
+                return $books;
+            }
+
+            // Convert object to array (useful for JSON APIs)
+            public function toArray()
+            {
+                return [
+                    'id' => $this->id,
+                    'title' => $this->title,
+                    'author' => $this->author,
+                    'publisher_id' => $this->publisher_id,
+                    'year' => $this->year,
+                    'cover_filename' => $this->cover_filename
+                ];
+            }
+        }
+    ?>
+</div>
+
         <h3>Test findAll():</h3>
         <div class="output">
             <?php
