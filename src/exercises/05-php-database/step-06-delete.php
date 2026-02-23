@@ -48,6 +48,36 @@ catch (PDOException $e) {
             // 4. DELETE FROM books WHERE id = :id
             // 5. Check rowCount()
             // 6. Try to fetch the book again to verify deletion
+
+         $insertStmt = $db->prepare("INSERT INTO books (title, author, description) VALUES (:title, :author, :description)");
+         $insertStmt-> execute([
+            'title' => 'Temporary Book to Delete',
+            'author' => 'Your Name',
+            'description' => 'This will be deleted'
+         ]);
+         
+        $tempId = $db->lastInsertId();
+        echo "<p class='info'>Created temporary book with ID: $tempId</p>";
+
+        $stmt = $db->prepare("DELETE FROM books WHERE id = :id");
+        $stmt->execute(['id' => $tempId]);
+
+        $deleted = $stmt->rowCount();
+
+        if($deleted > 0 ){
+            echo "<p class='success'>Deleted $deleted record(s)</p>";
+        } else {
+            echo "<P class='warning'>No records found to delete</p>";
+        }
+        
+        $stmt = $db->prepare("DELETE FROM books WHERE id = :id");
+        $stmt->execute(['id' => 57]);
+
+        if($stmt->rowCount() === 0) {
+        echo "<P class='warning'>No book found with that id</p>";
+        } else {
+            echo "<P class='warning'>Book deleted</p>";
+        }
             ?>
         </div>
     </div>
