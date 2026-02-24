@@ -24,7 +24,7 @@ class ImageUpload {
      * @param string|null $existingFilename The filename of an existing image to replace (will be deleted)
      * @return string|false The filename of the saved image, or false on failure
      */
-    public function process($file, $existingFilename = null) {
+        public function process($file, $existingFilename = null) {
         // Get MIME type
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($finfo, $file['tmp_name']);
@@ -33,6 +33,11 @@ class ImageUpload {
         // Generate unique filename
         $extension = $this->getExtensionFromMimeType($mimeType);
         $filename = $this->generateUniqueFilename($extension);
+
+        // Ensure targetDir is correct
+        $this->targetDir = dirname(__DIR__, 2) . '/images/';
+
+        // Full path to save the file
         $targetPath = $this->targetDir . $filename;
 
         // Move the uploaded file

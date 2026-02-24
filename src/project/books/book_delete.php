@@ -1,82 +1,84 @@
-<?php
-require_once 'php/lib/config.php';
-require_once 'php/lib/session.php';
-require_once 'php/lib/forms.php';
-require_once 'php/lib/utils.php';
 
-startSession();
+    <?php
+    require_once 'php/lib/config.php';
+    require_once 'php/lib/session.php';
+    require_once 'php/lib/forms.php';
+    require_once 'php/lib/utils.php';
+    require_once 'php/classes/Validator.php';
+    require_once 'php/classes/ImageUpload.php';
+    // require_once 'php/models/Book.php';
 
-try {
-    // Initialize form data array
-    $data = [];
-    // Initialize errors array
-    $errors = [];
-    
-    // Check if request is GET
-    if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-        throw new Exception('Invalid request method.');
-    }
+    startSession();
 
-    // Get form data
-    $data = [
-        'id' => $_GET['id'] ?? null
-    ];
-
-    // Define validation rules
-    $rules = [
-        'id' => 'required|integer'
-    ];
-
-    // Validate all data (including file)
-    $validator = new Validator($data, $rules);
-
-    if ($validator->fails()) {
-        // Get first error for each field
-        foreach ($validator->errors() as $field => $fieldErrors) {
-            $errors[$field] = $fieldErrors[0];
+    try {
+        // Only allow POST requests
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            throw new Exception('Invalid request method.');
         }
 
-        throw new Exception('Validation failed.');
-    }
+        // Initialize form data and errors
+        $data = [
+            'id' => $_POST['id'] ?? null
+        ];
 
-    // Find existing book
-    $book = Book::findById($data['id']);
-    if (!$book) {
-        throw new Exception('Book not found.');
-    }
+        $errors = [];
 
-    // Delete the associated image file if it exists
-    if ($book->cover_filename) {
-        $uploader = new ImageUpload();
-        $uploader->deleteImage($book->cover_filename);
-    }
-    // Delete the book
-    $book->delete();
+        // Validation rules
+        $rules = [
+            'id' => 'required|integer'
+        ];
 
-    // Clear any old form data
-    clearFormData();
-    // Clear any old errors
-    clearFormErrors();
+        // Validate
+        $validator = new Validator($data, $rules);
 
-    // Set success flash message
-    setFlashMessage('success', 'Book deleted successfully.');
+        if ($validator->fails()) {
+            foreach ($validator->errors() as $field => $fieldErrors) {
+                $errors[$field] = $fieldErrors[0];
+            }
 
-    // Redirect to book details page
-    redirect('index.php');
-}
-catch (Exception $e) {
-    // Set error flash message
-    setFlashMessage('error', 'Error: ' . $e->getMessage());
+            throw new Exception('Validation failed.');
+        }
 
-    // Store form data and errors in session
-    setFormData($data);
-    setFormErrors($errors);
+        // Find the book
+        $book = Book::findById($data['id']);
 
-    // Redirect back to view page if there is an ID; otherwise, go to index page
-    if (isset($data['id']) && $data['id']) {
-        redirect('book_view.php?id=' . $data['id']);
-    }
-    else {
+        if (!$book) {
+            throw new Exception('Book not found.');
+        }
+
+        // Delete associated image if it exists
+        if (!empty($book->cover_filename)) {
+            $uploader = new ImageUpload();
+            $uploader->deleteImage($book->cover_filename);
+        }
+
+        // Delete the book
+        if (!$book->delete()) {
+            throw new Exception('Failed to delete book.');
+        }
+
+        // Clear old session form data
+        clearFormData();
+        clearFormErrors();
+
+        // Success message
+        setFlashMessage('success', 'Book deleted successfully.');
+
         redirect('index.php');
     }
-}
+    catch (Exception $e) {
+
+        // Error flash message
+        setFlashMessage('error', 'Error: ' . $e->getMessage());
+
+        // Store form data + errors in session
+        setFormData($data ?? []);
+        setFormErrors($errors ?? []);
+
+        // Redirect safely
+        if (!empty($data['id'])) {
+            redirect('book_view.php?id=' . urlencode($data['id']));
+        } else {
+            redirect('index.php');
+        }
+    }

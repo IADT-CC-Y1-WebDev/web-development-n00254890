@@ -3,7 +3,7 @@ body {
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 1.5em;
-	background-color: #fff;
+	background-color: #eaaaec;
 }
 
 .cards {
@@ -13,7 +13,7 @@ body {
 }
 
 .card {
-	background-color: #f4f4f4;
+	background-color: #f8daf2;
 	padding: 16px;
 	border-radius: 7px;
 	border: 1px solid #bcbcbc;
@@ -29,7 +29,7 @@ body {
 	font-family: "IBM Plex Serif";
 	margin-bottom: 12px;
 	font-weight: 300;
-	color: #016040;
+	color: #0674b4;
 }
 
 .card p {
@@ -44,13 +44,13 @@ body {
 
 .card .actions a {
 	font-weight: 600;
-	color: #b0acfa;
+	color: #faacf3;
 	font-size: 13px;
 	text-transform: uppercase;
 }
 
 .card .actions a:hover {
-	color: #2c22df;
+	color: #e92a93;
 }
 
 .card img {
@@ -62,7 +62,7 @@ body {
 }
 
 .filters {
-	background-color: #f2f2f2;
+	background-color: #e9c3fa;
 	padding: 10px;
 	display: flex;
 	justify-content: flex-end;
@@ -93,10 +93,10 @@ body {
 
 .filters form button {
 	font-size: 13px;
-	background-color: #084108;
+	background-color: #8a40a7;
 	padding: 5px 10px;
 	color: #ececec;
-	border: 1px solid #4bff3c;
+	border: 1px solid #700374;
 	border-radius: 5px;
 }
 
@@ -108,15 +108,15 @@ body {
 
 .button {
 	font-size: 13px;
-	background-color: #123991;
+	background-color: #f85beb;
 	padding: 5px 10px;
 	color: #ececec;
-	border: 1px solid #4bff3c;
+	border: 1px solid #bb2dc0;
 	border-radius: 5px;
 }
 
 .hCard {
-	background-color: #f4f4f4;
+	background-color: #ffa9ea;
 	padding: 16px;
 	border-radius: 7px;
 	border: 1px solid #bcbcbc;
@@ -148,20 +148,20 @@ body {
 
 .hCard .actions a {
 	font-weight: 600;
-	color: #b0acfa;
+	color: #a33ab8;
 	font-size: 13px;
 	text-transform: uppercase;
 }
 
 .hCard .actions a:hover {
-	color: #2c22df;
+	color: #511361;
 }
 
 .hCard img {
 	width: 340px;
 	margin-bottom: 10px;
 	object-fit: cover;
-	border: 1px solid #7c75f1;
+	border: 1px solid #630653;
 	height: 340px;
 }
 

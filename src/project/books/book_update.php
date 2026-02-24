@@ -21,8 +21,8 @@ try {
     $data = [
         'id' => $_POST['id'] ?? null,
         'title' => $_POST['title'] ?? null,
-        'release_date' => $_POST['release_date'] ?? null,
-        'genre_id' => $_POST['genre_id'] ?? null,
+        'author' => $_POST['author'] ?? null,
+        'year' => $_POST['year'] ?? null,
         'description' => $_POST['description'] ?? null,
         'platform_ids' => $_POST['platform_ids'] ?? [],
         'image' => $_FILES['image'] ?? null
@@ -71,29 +71,25 @@ try {
     // }
 
     // Process the uploaded image (validation already completed)
-    $cover_Filename = null;
+    $cover_filename = null;
     $uploader = new ImageUpload();
     if ($uploader->hasFile('image')) {
-        // Delete old image
-        $uploader->deleteImage($book->image_filename);
-        // Process new image
-        $cover_Filename = $uploader->process($_FILES['image']);
-        // Check for processing errors
-        if (!$cover_Filename) {
+        $uploader->deleteImage($book->cover_filename);
+        $cover_filename = $uploader->process($_FILES['image']);
+        if (!$cover_filename) {
             throw new Exception('Failed to process and save the image.');
         }
     }
     
     // Update the book instance
-    $book->title = $data['title'];
+   $book->title = $data['title'];
     $book->author = $data['author'];
     $book->year = $data['year'];
     $book->description = $data['description'];
-    if ($cover_Filename) {
-        $book->image_filename = $cover_Filename;
+    if ($cover_filename) {
+    $book->cover_filename = $cover_filename;
     }
 
-    // Save to database
     $book->save();
 
     // // Delete existing platform associations

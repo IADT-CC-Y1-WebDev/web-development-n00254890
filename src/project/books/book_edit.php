@@ -20,14 +20,14 @@ try {
         throw new Exception("Book not found.");
     }
 
-    // $bookPublishers = Publishers::findByBook($book->id);
-    // $bookPublishers_Ids = [];
-    // foreach ($bookPublishers as $publisher) {
-    //     $bookPublishers_Ids[] = $publisher->id;
-    // }
+     $bookPublishers = Publishers::findByBook($book->id);
+     $bookPublishers_Ids = [];
+     foreach ($bookPublishers as $publisher) {
+         $bookPublishers_Ids[] = $publisher->id;
+     }
 
-    // $genres = Genre::findAll();
-    // $platforms = Platform::findAll();
+     $publisher = Publisher::findAll();
+     $formats = Formats::findAll();
 }
 catch (PDOException $e) {
     setFlashMessage('error', 'Error: ' . $e->getMessage());
@@ -87,22 +87,36 @@ catch (PDOException $e) {
                             <p><?= error('description') ?></p>
                         </div>
                     </div>
-                    <!-- <div class="input">
-                        <label class="special">Platforms:</label>
+                    <div class="input">
+                        <label class="special" for="publisher_id">Publisher:</label>
                         <div>
-                            <?php foreach ($platforms as $platform) { ?>
+                            <select id="publisher_id" name="publisher_id" required>
+                                <?php foreach ($publisher as $pub) { ?>
+                                    <option value="<?= h($pub->id) ?>" <?= chosen('publisher_id', $pub->id, $book->publisher_id) ? "selected" : "" ?>>
+                                        <?= h($pub->name) ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <p><?= error('publisher_id') ?></p>
+                        </div>
+                    </div>
+
+                    <div class="input">
+                        <label class="special">Formats:</label>
+                        <div>
+                            <?php foreach ($formats as $format) { ?>
                                 <div>
                                     <input type="checkbox" 
-                                        id="platform_<?= h($platform->id) ?>" 
-                                        name="platform_ids[]" 
-                                        value="<?= h($platform->id) ?>"
-                                        <?= chosen('platform_ids', $platform->id, $gamePlatformsIds) ? "checked" : "" ?>
+                                        id="format_<?= h($format->id) ?>" 
+                                        name="format_ids[]" 
+                                        value="<?= h($format->id) ?>"
+                                        <?= chosen('format_ids', $format->id, $bookFormatsIds) ? "checked" : "" ?>
                                     >
-                                    <label for="platform_<?= h($platform->id) ?>"><?= h($platform->name) ?></label>
-                                 </div> -->
-                            <!-- <?php } ?>
+                                    <label for="format_<?= h($format->id) ?>"><?= h($format->name) ?></label>
+                                 </div>
+                            <?php } ?>
                         </div>
-                        <p><?= error('platform_ids') ?></p>
+                        <p><?= error('format_ids') ?></p>
                     </div>
                     <div><img src="images/<?= $book->image_filename ?>" /></div>
                     <div class="input">
@@ -111,7 +125,7 @@ catch (PDOException $e) {
                             <input type="file" id="image" name="image" accept="image/*">
                             <p><?= error('image') ?></p>
                         </div>
-                    </div>  -->
+                    </div>
                     <div class="input">
                         <button class="button" type="submit">Update Book</button>
                         <div class="button"><a href="index.php">Cancel</a></div>
