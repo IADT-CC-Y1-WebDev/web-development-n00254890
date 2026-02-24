@@ -3,36 +3,37 @@ require_once 'php/lib/config.php';
 require_once 'php/lib/session.php';
 require_once 'php/lib/forms.php';
 require_once 'php/lib/utils.php';
+// require_once 'php/classes/Publisher.php';
+// require_once 'php/classes/Format.php';
 
 startSession();
 
-try {
-    if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-        throw new Exception('Invalid request method.');
-    }
-    if (!array_key_exists('id', $_GET)) {
-        throw new Exception('No book ID provided.');
-    }
-    $id = $_GET['id'];
+    try {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            throw new Exception('Invalid request method.');
+        }
 
-    $book = Book::findById($id);
-    if ($book === null) {
-        throw new Exception("Book not found.");
+        if (!array_key_exists('id', $_GET)) {
+            throw new Exception('No book ID provided.');
+        }
+
+        $id = $_GET['id'];
+
+        $book = Book::findById($id);
+        if ($book === null) {
+            throw new Exception("Book not found.");
+        }
+
+        // Example: If you want to fetch publishers or formats
+        // $bookPublishers = Publisher::findByBook($book->id);
+        // $bookPublisherIds = array_map(fn($p) => $p->id, $bookPublishers);
+        // $publishers = Publisher::findAll();
+        // $formats = Format::findAll();
+
+    } catch (Exception $e) {
+        setFlashMessage('error', 'Error: ' . $e->getMessage());
+        redirect('/index.php');
     }
-
-     $bookPublishers = Publishers::findByBook($book->id);
-     $bookPublishers_Ids = [];
-     foreach ($bookPublishers as $publisher) {
-         $bookPublishers_Ids[] = $publisher->id;
-     }
-
-     $publisher = Publisher::findAll();
-     $formats = Formats::findAll();
-}
-catch (PDOException $e) {
-    setFlashMessage('error', 'Error: ' . $e->getMessage());
-    redirect('/index.php');
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,37 +88,7 @@ catch (PDOException $e) {
                             <p><?= error('description') ?></p>
                         </div>
                     </div>
-                    <div class="input">
-                        <label class="special" for="publisher_id">Publisher:</label>
-                        <div>
-                            <select id="publisher_id" name="publisher_id" required>
-                                <?php foreach ($publisher as $pub) { ?>
-                                    <option value="<?= h($pub->id) ?>" <?= chosen('publisher_id', $pub->id, $book->publisher_id) ? "selected" : "" ?>>
-                                        <?= h($pub->name) ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                            <p><?= error('publisher_id') ?></p>
-                        </div>
-                    </div>
-
-                    <div class="input">
-                        <label class="special">Formats:</label>
-                        <div>
-                            <?php foreach ($formats as $format) { ?>
-                                <div>
-                                    <input type="checkbox" 
-                                        id="format_<?= h($format->id) ?>" 
-                                        name="format_ids[]" 
-                                        value="<?= h($format->id) ?>"
-                                        <?= chosen('format_ids', $format->id, $bookFormatsIds) ? "checked" : "" ?>
-                                    >
-                                    <label for="format_<?= h($format->id) ?>"><?= h($format->name) ?></label>
-                                 </div>
-                            <?php } ?>
-                        </div>
-                        <p><?= error('format_ids') ?></p>
-                    </div>
+             
                     <div><img src="images/<?= $book->image_filename ?>" /></div>
                     <div class="input">
                         <label class="special" for="image">Image (optional):</label>
