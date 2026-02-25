@@ -7,33 +7,49 @@ require_once 'php/lib/utils.php';
 // require_once 'php/classes/Format.php';
 
 startSession();
+$publishers = [
+    ['id' => 1, 'name' => 'Penguin Random House'],
+    ['id' => 2, 'name' => 'HarperCollins'],
+    ['id' => 3, 'name' => 'Simon & Schuster'],
+    ['id' => 4, 'name' => 'Hachette Book Group'],
+    ['id' => 5, 'name' => 'Macmillan Publishers'],
+    ['id' => 6, 'name' => 'Scholastic Corporation'],
+    ['id' => 7, 'name' => 'O\'Reilly Media']
+];
 
-    try {
-        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-            throw new Exception('Invalid request method.');
-        }
+$formats = [
+    ['id' => 1, 'name' => 'Hardcover'],
+    ['id' => 2, 'name' => 'Paperback'],
+    ['id' => 3, 'name' => 'Ebook'],
+    ['id' => 4, 'name' => 'Audiobook']
+];
 
-        if (!array_key_exists('id', $_GET)) {
-            throw new Exception('No book ID provided.');
-        }
+    // try {
+    //     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    //         throw new Exception('Invalid request method.');
+    //     }
 
-        $id = $_GET['id'];
+    //     if (!array_key_exists('id', $_GET)) {
+    //         throw new Exception('No book ID provided.');
+    //     }
 
-        $book = Book::findById($id);
-        if ($book === null) {
-            throw new Exception("Book not found.");
-        }
+    //     $id = $_GET['id'];
+
+    //     $book = Book::findById($id);
+    //     if ($book === null) {
+    //         throw new Exception("Book not found.");
+    //     }
 
         // Example: If you want to fetch publishers or formats
-        // $bookPublishers = Publisher::findByBook($book->id);
-        // $bookPublisherIds = array_map(fn($p) => $p->id, $bookPublishers);
+        // $publishers = Publisher::findByBook($book->id);
+        // $publisher_Ids = array_map(fn($p) => $p->id, $publishers);
         // $publishers = Publisher::findAll();
         // $formats = Format::findAll();
 
-    } catch (Exception $e) {
-        setFlashMessage('error', 'Error: ' . $e->getMessage());
-        redirect('/index.php');
-    }
+    // } catch (Exception $e) {
+    //     setFlashMessage('error', 'Error: ' . $e->getMessage());
+    //     redirect('/index.php');
+    // }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,12 +64,14 @@ startSession();
             </div>
             <div class="width-12">
                 <h1>Edit Book</h1>
-            </div>
+
+        </div>
             <div class="width-12">
                 <form action="book_update.php" method="POST" enctype="multipart/form-data">
                     <div class="input">
                         <input type="hidden" name="id" value="<?= h($book->id) ?>">
                     </div>
+                     <div class="width-12">
                     <div class="input">
                         <label class="special" for="title">Title:</label>
                         <div>
@@ -61,26 +79,41 @@ startSession();
                             <p><?= error('title') ?></p>
                         </div>
                     </div>
+            </div>
+                <div class="width-12">
                     <div class="input">
                         <label class="special" for="author">Author:</label>
                         <div>
                             <input type="text" id="author" name="author" value="<?= old('author', $book->author) ?>" required>
                             <p><?= error('author') ?></p>
                         </div>
-                    </div>
-                    <div class="input">
-                        <label class="special" for="year">year:</label>
+                </div>
+                <div class="width-12">
+                      <div class="input">
+                        <label class="special" for="publisher_id">Publisher:</label>
                         <div>
-                            <select id="year" name="year" required>
-                                <?php foreach ($years as $year) { ?>
-                                    <option value="<?= h($year->id) ?>" <?= chosen('year', $year->id, $book->year) ? "selected" : "" ?>>
-                                        <?= h($year->name) ?>
+                            <select id="publisher_id" name="publisher_id">
+                                <option value="">--select Publisher--</option>
+                                <?php foreach ($publishers as $pub): ?>
+                                    <option value="<?= ($pub['id']) ?>"
+                                     <?= chosen('publisher_id', $pub['id']) ? "selected" : "" ?>>
+                                        <?= h($pub['name']) ?>
                                     </option>
-                                <?php } ?>
-                            </select>
+                                    <?php endforeach; ?>
+                                </select>
+                                <p><?= error('publisher_id') ?></p>
+                        </div>
+                </div>       
+             <div class="width-12">       
+                    <div class="input">
+                        <label class="special" for="year">Year:</label>
+                        <div>
+                            <input type="number" id="year" name="year" value="<?= old('year', $book->year) ?>" required>
                             <p><?= error('year') ?></p>
                         </div>
                     </div>
+              </div>      
+            <div class="width-12">        
                     <div class="input">
                         <label class="special" for="description">Description:</label>
                         <div>
@@ -88,7 +121,8 @@ startSession();
                             <p><?= error('description') ?></p>
                         </div>
                     </div>
-             
+             </div>       
+            <div class="width-12"> 
                     <div><img src="images/<?= $book->image_filename ?>" /></div>
                     <div class="input">
                         <label class="special" for="image">Image (optional):</label>
@@ -97,11 +131,15 @@ startSession();
                             <p><?= error('image') ?></p>
                         </div>
                     </div>
+             </div>       
+             <div class="width-12">       
                     <div class="input">
                         <button class="button" type="submit">Update Book</button>
                         <div class="button"><a href="index.php">Cancel</a></div>
                     </div>
+                    </div>
                 </form>
+                </div>
             </div>
         </div>
     </body>
