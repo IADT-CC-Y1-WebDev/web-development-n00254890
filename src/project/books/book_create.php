@@ -108,7 +108,7 @@ catch (PDOException $e) {
                 <!-- Description -->
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea id="description" name="description" rows="5"><?= h(old('description')) ?></textarea>
+                    <textarea id="description" name="description" required><?= h(old('description', $book->description)) ?></textarea>
                     <?php if (error('description')): ?>
                         <p class="error"><?= error('description') ?></p>
                     <?php endif; ?>

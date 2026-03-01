@@ -165,28 +165,3 @@ body {
 	height: 340px;
 }
 
-form {
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-	/* align-items: center; */
-}
-
-.input {
-	display: flex;
-	gap: 20px;
-}
-
-.input p {
-	margin-top: 3px;
-	color: red;
-	font-size: 14px;
-}
-
-.input label.special {
-	width: 108px;
-	display: flex;
-	justify-content: flex-end;
-	color: #252525;
-	font-weight: 900;
-}
