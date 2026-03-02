@@ -31,7 +31,7 @@
 .button {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color:#ff3aea;
+    background-color:#ee80f8;
     color: white;
     border: none;
     border-radius: 4px;
@@ -42,7 +42,7 @@
 }
 
 .button:hover {
-    background-color: #7d08bc;
+    background-color: #ff55ff;
 }
 
 .button.secondary {

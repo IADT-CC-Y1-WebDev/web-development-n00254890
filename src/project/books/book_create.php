@@ -23,7 +23,7 @@ catch (PDOException $e) {
 </head>
 <body>
     <div class="container">
-        <div class="width-12">
+        <div class=" width-12">
             <?php require 'php/inc/flash_message.php'; ?>
         </div>
         <div class="width-12">
@@ -37,8 +37,8 @@ catch (PDOException $e) {
         <div class="width-12">
             <form action="/project/books/book_store.php" method="POST" enctype="multipart/form-data">
                 <!-- Title -->
-                <div class="form-group">
-                    <label for="title">Book Title:</label>
+                <div class="input">
+                    <label class="special" for="title">Book Title:</label>
                     <input type="text" id="title" name="title" value="<?= old('title') ?>">
                     <?php if (error('title')): ?>
                         <p class="error"><?= error('title') ?></p>
@@ -46,8 +46,8 @@ catch (PDOException $e) {
                 </div>
 
                 <!-- Author -->
-                <div class="form-group">
-                    <label for="author">Author:</label>
+                <div class="input">
+                    <label class="special" for="author">Author:</label>
                     <input type="text" id="author" name="author" value="<?= old('author') ?>">
                     <?php if (error('author')): ?>
                         <p class="error"><?= error('author') ?></p>
@@ -55,10 +55,11 @@ catch (PDOException $e) {
                 </div>
 
                 <!-- Publisher -->
-                <div class="form-group">
-                    <label for="publisher_id">Publisher:</label>
+
+                <div class="input">
+                    <label class="special" for="publisher_id">Publisher:</label>
                     <select id="publisher_id" name="publisher_id">
-                        <option value="">-- Select Publisher --</option>
+                        <option value="">Select Publisher</option>
                         <?php foreach ($publishers as $pub): ?>
                             <option value="<?= $pub->id ?>" <?= chosen('publisher_id', $pub->id) ? "selected" : "" ?>>
                                 <?= h($pub->name) ?>
@@ -70,27 +71,33 @@ catch (PDOException $e) {
                     <?php endif; ?>
                 </div>
 
+
                 <!-- Year -->
-                <div class="form-group">
-                    <label for="year">Year:</label>
+
+                <div class="input">
+                    <label class="special"  for="year">Year:</label>
                     <input type="number" id="year" name="year" min="1900" max="2099" step="1" value="<?= h(old('year')) ?>">
                     <?php if (error('year')): ?>
                         <p class="error"><?= error('year') ?></p>
                     <?php endif; ?>
                 </div>
 
+
                 <!-- ISBN -->
-                <div class="form-group">
-                    <label for="isbn">ISBN:</label>
+
+                <div class="input">
+                    <label class="special" for="isbn">ISBN:</label>
                     <input type="text" id="isbn" name="isbn" value="<?= h(old('isbn')) ?>">
                     <?php if (error('isbn')): ?>
                         <p class="error"><?= error('isbn') ?></p>
                     <?php endif; ?>
                 </div>
 
+
                 <!-- Formats -->
-                <div class="form-group">
-                    <label>Available Formats:</label>
+
+                <div class="input">
+                    <label class="special">Available Formats:</label>
                     <div class="checkbox-group">
                         <?php foreach ($formats as $format): ?>
                             <label class="checkbox-label">
@@ -106,17 +113,17 @@ catch (PDOException $e) {
                 </div>
 
                 <!-- Description -->
-                <div class="form-group">
-                    <label for="description">Description:</label>
-                    <textarea id="description" name="description" required><?= h(old('description', $book->description)) ?></textarea>
+                <div class="input">
+                    <label class="special" for="description">Description:</label>
+                     <textarea id="description" name="description" required><?= old('description') ?></textarea>
                     <?php if (error('description')): ?>
                         <p class="error"><?= error('description') ?></p>
                     <?php endif; ?>
                 </div>
 
                 <!-- Cover Image -->
-                <div class="form-group">
-                    <label for="cover">Book Cover Image (max 2MB):</label>
+                <div class="input">
+                    <label class="special" for="cover"> Cover Image:</label>
                     <input type="file" id="cover" name="cover" accept="image/*">
                     <?php if (error('cover')): ?>
                         <p class="error"><?= error('cover') ?></p>
@@ -124,7 +131,7 @@ catch (PDOException $e) {
                 </div>
 
                 <!-- Submit -->
-                <div class="form-group">
+                <div class="input">
                     <button type="submit" class="button">Save Book</button>
                 </div>
             </form>
