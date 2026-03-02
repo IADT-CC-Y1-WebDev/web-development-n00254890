@@ -95,22 +95,19 @@ catch (PDOException $e) {
 
 
                 <!-- Formats -->
-
                 <div class="input">
-                    <label class="special">Available Formats:</label>
-                    <div class="checkbox-group">
-                        <?php foreach ($formats as $format): ?>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="format_ids[]" value="<?= $format->id ?>" 
-                                    <?= chosen('format_ids', $format->id) ? "checked" : "" ?>>
-                                <?= h($format->name) ?>
-                            </label>
-                        <?php endforeach; ?>
+                        <label class="special" for="format_id">Formats:</label>
+                        <div>
+                            <select id="format_id" name="format_id" required>
+                                <?php foreach ($formats as $format) { ?>
+                                    <option value="<?= h($format->id) ?>" <?= chosen('format_id', $format->id) ? "selected" : "" ?>>
+                                        <?= h($format->name) ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <p><?= error('format_id') ?></p>
+                        </div>
                     </div>
-                    <?php if (error('format')): ?>
-                        <p class="error"><?= error('format') ?></p>
-                    <?php endif; ?>
-                </div>
 
                 <!-- Description -->
                 <div class="input">
