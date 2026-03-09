@@ -28,7 +28,7 @@
 }
 
 /* Buttons */
-.button {
+/* .button {
     display: inline-block;
     padding: 0.5rem 1rem;
     background-color:#ee80f8;
@@ -51,7 +51,7 @@
 
 .button.secondary:hover {
     background-color: #545b62;
-}
+} */
 
 /* Flash Messages */
 .flash-message {

@@ -3,7 +3,6 @@
 class Format {
     public $id;
     public $name;
-    public $description;
 
     private $db;
 
@@ -13,7 +12,6 @@ class Format {
         if (!empty($data)) {
             $this->id = $data['id'] ?? null;
             $this->name = $data['name'] ?? null;
-            $this->description = $data['description'] ?? null;
         }
     }
 
@@ -49,8 +47,7 @@ class Format {
     public function toArray() {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description
+            'name' => $this->name
         ];
     }
 }

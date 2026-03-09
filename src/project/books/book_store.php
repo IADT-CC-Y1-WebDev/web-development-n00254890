@@ -75,11 +75,13 @@ try {
     $book->save();
 
     // Attach formats (if you have pivot table)
-    // if (!empty($data['format_ids']) && is_array($data['format_ids'])) {
-    //     foreach ($data['format_ids'] as $formatId) {
-    //         BookFormat::create($book->id, $formatId);
-    //     }
-    // }
+     if (!empty($data['format_ids']) && is_array($data['format_ids'])) {
+         foreach ($data['format_ids'] as $formatId) {
+            if(Format::findbyId($formatId)) {
+            BookFormat::create($book->id, $formatId);
+       }
+    }
+}
 
     // Clear form data & errors
     clearFormData();

@@ -29,6 +29,8 @@ try {
     $publishers = Publisher::findAll();
     $formats = Format::findAll();
 
+    // $bookformats = Format::findByBook($book-id);
+
 } catch (Exception $e) {
     setFlashMessage('error', 'Error: ' . $e->getMessage());
     redirect('/index.php');
@@ -96,21 +98,31 @@ try {
                         </div>
                     </div>
               </div> 
-            <div class="input">
-                <label class="special" for="format_id">Format:</label>
-                <div>
-                    <select id="format_id" name="format_id" required>
-                        <option value="">--select Format--</option>
-                        <?php foreach ($formats as $format): ?>
-                            <option value="<?= h($format->id) ?>"
-                                <?= chosen('format_id', $format->id, $book->format_id) ? "selected" : "" ?>>
-                                <?= h($format->name) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <p><?= error('format_id') ?></p>
+
+                <div class="input">
+                    <label class="special" for="isbn">ISBN:</label>
+                    <input type="text" id="isbn" name="isbn" value="<?= old('isbn', $book->isbn) ?>" required>
+                    <p><?= error('isbn')?></p>
                 </div>
-            </div>     
+
+                <div class="input">
+                        <label class="special">Formats:</label>
+                        <div>
+                            <?php foreach ($formats as $format) { ?>
+                                <div>
+                                    <input type="checkbox" 
+                                        id="format_<?= h($format->id) ?>" 
+                                        name="format_ids[]" 
+                                        value="<?= h($format->id) ?>"
+                                        <?= chosen('format_ids', $format->id /* , $bookFormats */) ? "checked" : "" ?>
+                                        >
+                                    <label for="format_<?= h($format->id) ?>"><?= h($format->name) ?></label>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <p><?= error('format_ids') ?></p>
+                    </div>
+
             <div class="width-12">        
                     <div class="input">
                         <label class="special" for="description">Description:</label>

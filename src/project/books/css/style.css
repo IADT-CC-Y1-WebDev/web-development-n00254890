@@ -116,7 +116,7 @@ body {
 }
 
 .hCard {
-	background-color: #330327;
+	background-color: #ffd4fe;
 	padding: 16px;
 	border-radius: 7px;
 	border: 1px solid #bcbcbc;
@@ -158,17 +158,15 @@ body {
 }
 
 .hCard img {
-	width: 340px;
+	width: 840px;
 	margin-bottom: 10px;
 	object-fit: cover;
 	border: 1px solid #630653;
-	height: 340px;
 }
 form {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	/* align-items: center; */
 }
 
 .input {

@@ -6,7 +6,6 @@ class Book {
     public $title;
     public $author;
     public $publisher_id;
-    public $format_id; 
     public $year;
     public $isbn;
     public $description;
@@ -23,7 +22,6 @@ class Book {
             $this->title = $data['title'] ?? null;
             $this->author = $data['author'] ?? null;
             $this->publisher_id = $data['publisher_id'] ?? null;
-            $this->format_id = $data['format_id'] ?? null; // ✅ FIXED
             $this->year = $data['year'] ?? null;
             $this->isbn = $data['isbn'] ?? null;
             $this->description = $data['description'] ?? null;
@@ -61,7 +59,6 @@ class Book {
                 SET title = :title,
                     author = :author,
                     publisher_id = :publisher_id,
-                    format_id = :format_id,       -- ✅ Added
                     year = :year,
                     isbn = :isbn,
                     description = :description,
@@ -73,7 +70,6 @@ class Book {
                 'title' => $this->title,
                 'author' => $this->author,
                 'publisher_id' => $this->publisher_id,
-                'format_id' => $this->format_id,   // ✅ Added
                 'year' => $this->year,
                 'isbn' => $this->isbn,
                 'description' => $this->description,
@@ -84,16 +80,15 @@ class Book {
         } else {
             $stmt = $this->db->prepare("
                 INSERT INTO books
-                (title, author, publisher_id, format_id, year, isbn, description, cover_filename)
+                (title, author, publisher_id, year, isbn, description, cover_filename)
                 VALUES
-                (:title, :author, :publisher_id, :format_id, :year, :isbn, :description, :cover_filename)
+                (:title, :author, :publisher_id, :year, :isbn, :description, :cover_filename)
             ");
 
             $params = [
                 'title' => $this->title,
                 'author' => $this->author,
                 'publisher_id' => $this->publisher_id,
-                'format_id' => $this->format_id,   // ✅ Added
                 'year' => $this->year,
                 'isbn' => $this->isbn,
                 'description' => $this->description,
@@ -132,7 +127,6 @@ class Book {
             'title' => $this->title,
             'author' => $this->author,
             'publisher_id' => $this->publisher_id,
-            'format_id' => $this->format_id,  // ✅ Added
             'year' => $this->year,
             'isbn' => $this->isbn,
             'description' => $this->description,

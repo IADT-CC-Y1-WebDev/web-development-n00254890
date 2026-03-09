@@ -3,7 +3,6 @@
 class Publisher {
     public $id;
     public $name;
-    public $manufacturer;
 
     private $db;
 
@@ -13,7 +12,6 @@ class Publisher {
         if (!empty($data)) {
             $this->id = $data['id'] ?? null;
             $this->name = $data['name'] ?? null;
-            $this->manufacturer = $data['manufacturer'] ?? null;
         }
     }
 
@@ -69,8 +67,7 @@ class Publisher {
     public function toArray() {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'manufacturer' => $this->manufacturer
+            'name' => $this->name
         ];
     }
 }

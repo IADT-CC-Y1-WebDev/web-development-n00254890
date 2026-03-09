@@ -35,7 +35,7 @@ catch (PDOException $e) {
             <h1>Add New Book</h1>
         </div>
         <div class="width-12">
-            <form action="/project/books/book_store.php" method="POST" enctype="multipart/form-data">
+            <form action="/project/books/book_store.php" method="POST" enctype="multipart/form-data" novalidate>
                 <!-- Title -->
                 <div class="input">
                     <label class="special" for="title">Book Title:</label>
@@ -71,9 +71,7 @@ catch (PDOException $e) {
                     <?php endif; ?>
                 </div>
 
-
                 <!-- Year -->
-
                 <div class="input">
                     <label class="special"  for="year">Year:</label>
                     <input type="number" id="year" name="year" min="1900" max="2099" step="1" value="<?= h(old('year')) ?>">
@@ -84,7 +82,6 @@ catch (PDOException $e) {
 
 
                 <!-- ISBN -->
-
                 <div class="input">
                     <label class="special" for="isbn">ISBN:</label>
                     <input type="text" id="isbn" name="isbn" value="<?= h(old('isbn')) ?>">
@@ -96,17 +93,21 @@ catch (PDOException $e) {
 
                 <!-- Formats -->
                 <div class="input">
-                        <label class="special" for="format_id">Formats:</label>
+                        <label class="special">Formats:</label>
                         <div>
-                            <select id="format_id" name="format_id" required>
-                                <?php foreach ($formats as $format) { ?>
-                                    <option value="<?= h($format->id) ?>" <?= chosen('format_id', $format->id) ? "selected" : "" ?>>
-                                        <?= h($format->name) ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                            <p><?= error('format_id') ?></p>
+                            <?php foreach ($formats as $format) { ?>
+                                <div>
+                                    <input type="checkbox" 
+                                        id="format_<?= h($format->id) ?>" 
+                                        name="format_ids[]" 
+                                        value="<?= h($format->id) ?>"
+                                        <?= chosen('format_ids', $format->id) ? "checked" : "" ?>
+                                        >
+                                    <label for="format_<?= h($format->id) ?>"><?= h($format->name) ?></label>
+                                </div>
+                            <?php } ?>
                         </div>
+                        <p><?= error('format_ids') ?></p>
                     </div>
 
                 <!-- Description -->

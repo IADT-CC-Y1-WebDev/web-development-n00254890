@@ -37,15 +37,9 @@ catch (PDOException $e) {
                     <div class="bottom-content">
                         <img src="/project/books/images/<?= h($book->cover_filename) ?>" alt="Book Cover">
 
-                                        <div class="actions">
-                        <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a> /
-
-                        <form action="book_delete.php" method="POST" style="display:inline;" 
-                            onsubmit="return confirm('Are you sure you want to delete this book?');">
-                            <input type="hidden" name="id" value="<?= h($book->id) ?>">
-                            <button type="submit" class="button danger">Delete</button>
-                        </form> /
-
+                    <div class="actions">
+                        <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a> 
+                        <a href="book_delete.php?id=<?= h($book->id) ?>">Delete</a>
                         <a href="index.php">Back to list</a>
                     </div>
                     </div>

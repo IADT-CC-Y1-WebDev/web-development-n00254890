@@ -22,21 +22,26 @@ try {
         'id' => $_POST['id'] ?? null,
         'title' => $_POST['title'] ?? null,
         'author' => $_POST['author'] ?? null,
+        'publisher_id' => $_POST['publisher_id'] ?? null,
         'year' => $_POST['year'] ?? null,
+        'isbn' => $_POST['isbn'] ?? null,
         'description' => $_POST['description'] ?? null,
-        'platform_ids' => $_POST['platform_ids'] ?? [],
+        'format_ids' => $_POST['format_ids'] ?? [],
         'image' => $_FILES['image'] ?? null
     ];
 
     // Define validation rules
+    $year = date("Y");
     $rules = [
-        'id' => 'required|integer',
+        'id' => 'required|integer|min:1|max:255',
         'title' => 'required|notempty|min:1|max:255',
-        'release_date' => 'required|notempty',
-        'genre_id' => 'required|integer',
+        'author' => 'required|notempty|min:1|max:255',
+        'publisher_id' => 'required|notempty|integer',
+        'year'=> 'required|notempty|integer|minvalue:1900|maxvalue:'. $year,
+        'isbn' => "required|nonempty|min:13|max:13",
         'description' => 'required|notempty|min:10|max:5000',
-        'platform_ids' => 'required|array|min:1|max:10',
-        'image' => 'file|image|mimes:jpg,jpeg,png|max_file_size:5242880' // optional -- no required rule
+        'format_ids' => 'required|array|min:1|max:10',
+        'image' => 'file|image|mimes:jpg,jpeg,png|max_file_size:5242880'
     ];
 
     // Validate all data (including file)
@@ -57,18 +62,18 @@ try {
         throw new Exception('Book not found.');
     }
 
-    // // Verify genre exists
-    // $genre = Genre::findById($data['genre_id']);
-    // if (!$genre) {
-    //     throw new Exception('Selected genre does not exist.');
-    // }
+    // Verify Publisher exists
+     $publisher = Publisher::findById($data['publisher_id']);
+    if (!$publisher) {
+        throw new Exception('Selected publisher does not exist.');
+     }
 
-    // // Verify platforms exist
-    // foreach ($data['platform_ids'] as $platformId) {
-    //     if (!Platform::findById($platformId)) {
-    //         throw new Exception('One or more selected platforms do not exist.');
-    //     }
-    // }
+    // Verify formats exist
+     foreach ($data['format_ids'] as $formatId) {
+         if (!Format::findById($formatId)) {
+             throw new Exception('One or more selected formats do not exist.');
+         }
+     }
 
     // Process the uploaded image (validation already completed)
     $cover_filename = null;
@@ -82,9 +87,12 @@ try {
     }
     
     // Update the book instance
-   $book->title = $data['title'];
+    $book->id = $data['id'];
+    $book->title = $data['title'];
     $book->author = $data['author'];
+    $book->publisher_id = $data['publisher_id'];
     $book->year = $data['year'];
+    $book->isbn = $data['isbn'];
     $book->description = $data['description'];
     if ($cover_filename) {
     $book->cover_filename = $cover_filename;
@@ -92,14 +100,14 @@ try {
 
     $book->save();
 
-    // // Delete existing platform associations
-    // BookPlatform::deleteByBook($book->id);
-    // // Create new platform associations
-    // if (!empty($data['platform_ids']) && is_array($data['platform_ids'])) {
-    //     foreach ($data['platform_ids'] as $platformId) {
-    //         BookPlatform::create($book->id, $platformId);
-    //     }
-    // }
+    // Delete existing format associations
+     Bookformat::deleteByBook($book->id);
+     // Create new format associations
+     if (!empty($data['format_ids']) && is_array($data['format_ids'])) {
+         foreach ($data['format_ids'] as $formatId) {
+             BookFormat::create($book->id, $formatId);
+         }
+     }
 
     // Clear any old form data
     clearFormData();
