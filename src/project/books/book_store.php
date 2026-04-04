@@ -41,6 +41,10 @@ try {
         'description'  => "required|nonempty|min:10",
         'cover'        => "required|file|image|mimes:jpg,jpeg,png|max_file_size:5242880"
     ];
+    
+    if (empty($_FILES['cover']['name'])) {
+        $errors['cover'] = 'Cover image is required.';
+    }
 
     $validator = new Validator($data, $rules);
 

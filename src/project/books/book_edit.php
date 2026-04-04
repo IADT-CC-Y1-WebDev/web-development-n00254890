@@ -29,7 +29,12 @@ try {
     $publishers = Publisher::findAll();
     $formats = Format::findAll();
 
-    // $bookformats = Format::findByBook($book-id);
+    $bookFormats = Format::findByBook($book->id);
+
+    $bookFormatIds = [];
+    foreach ($bookFormats as $format) {
+        $bookFormatIds[] = $format->id;
+    }
 
 } catch (Exception $e) {
     setFlashMessage('error', 'Error: ' . $e->getMessage());
@@ -114,7 +119,7 @@ try {
                                         id="format_<?= h($format->id) ?>" 
                                         name="format_ids[]" 
                                         value="<?= h($format->id) ?>"
-                                        <?= chosen('format_ids', $format->id /* , $bookFormats */) ? "checked" : "" ?>
+                                        <?= chosen('format_ids', $format->id, $bookFormatIds) ? "checked" : "" ?>
                                         >
                                     <label for="format_<?= h($format->id) ?>"><?= h($format->name) ?></label>
                                 </div>
@@ -133,7 +138,7 @@ try {
                     </div>
              </div>       
             <div class="width-12"> 
-                    <div><img src="images/<?= $book->image_filename ?>" /></div>
+                    <div><img src="images/<?= $book->cover_filename ?>" />
                     <div class="input">
                         <label class="special" for="image">Image (optional):</label>
                         <div>

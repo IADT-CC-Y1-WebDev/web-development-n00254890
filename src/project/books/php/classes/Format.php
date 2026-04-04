@@ -29,6 +29,26 @@ class Format {
         return $formats;
     }
 
+    // Find formats by book ID
+    public static function findByBook($bookId) {
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("
+            SELECT f.*
+            FROM formats f
+            INNER JOIN book_format bf ON f.id = bf.format_id
+            WHERE bf.book_id = :book_id
+            ORDER BY f.name
+        ");
+        $stmt->execute(['book_id' => $bookId]);
+
+        $formats = [];
+        while ($row = $stmt->fetch()) {
+            $formats[] = new Format($row);
+        }
+
+        return $formats;
+    }
+
     // Find format by ID
     public static function findById($id) {
         $db = DB::getInstance()->getConnection();
