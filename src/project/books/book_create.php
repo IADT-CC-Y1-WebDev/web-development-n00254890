@@ -123,7 +123,7 @@ catch (PDOException $e) {
                 <div class="input">
                     <label class="special" for="cover"> Cover Image:</label>
                     <input type="file" id="cover" name="cover" accept="image/*" required>
-                     <p><?= error('image') ?></p>
+                     <p class="error"><?= error('cover') ?></p>
                 </div>
 
                 <!-- Submit -->
