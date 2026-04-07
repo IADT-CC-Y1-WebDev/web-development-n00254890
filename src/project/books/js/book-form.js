@@ -1,4 +1,3 @@
-
 let submitBtn = document.getElementById('submit_btn');
 let bookForm = document.getElementById('book_form');
 let errorSummaryTop = document.getElementById('error_summary_top');
@@ -8,9 +7,9 @@ let authorInput = document.getElementById('author');
 let publisherIdInput = document.getElementById('publisher_id');
 let yearInput = document.getElementById('year');
 let isbnInput = document.getElementById('isbn');
-let formatIdInput = document.getElementById('format_id');
 let descriptionInput = document.getElementById('description');
-let imageInput = document.getElementsByName('image');
+let formatIdsInput = document.getElementsByName('format_ids[]');
+let imageInput = document.getElementById('cover');
 
 let titleError = document.getElementById('title_error');
 let authorError = document.getElementById('author_error');
@@ -31,29 +30,28 @@ function addError(fieldName, message) {
 
 function showErrorSummaryTop() {
     const messages = Object.values(errors);
+
     if (messages.length === 0) {
         errorSummaryTop.style.display = 'none';
         errorSummaryTop.innerHTML = '';
         return;
     }
+
     errorSummaryTop.innerHTML =
         '<strong>Please fix the following:</strong><ul>' +
-        messages
-            .map(function (m) {
-                return '<li>' + m + '</li>';
-            })
-            .join('') +
+        messages.map(m => '<li>' + m + '</li>').join('') +
         '</ul>';
+
     errorSummaryTop.style.display = 'block';
 }
 
 function showFieldErrors() {
     titleError.innerHTML = errors.title || '';
     authorError.innerHTML = errors.author || '';
-    publisherIdError.innerHTML = errors.publihser_id || '';
+    publisherIdError.innerHTML = errors.publisher_id || '';
     yearError.innerHTML = errors.year || '';
     isbnError.innerHTML = errors.isbn || '';
-    formatIdError.innerHTML = errors.format_id || '';
+    formatIdError.innerHTML = errors.format_ids || '';
     descriptionError.innerHTML = errors.description || '';
     imageError.innerHTML = errors.image || '';
 }
@@ -62,74 +60,52 @@ function isRequired(value) {
     return String(value).trim() !== '';
 }
 
-function isMinLength(value, min) {
-    return String(value).trim().length >= min;
-}
-
-function isMaxLength(value, max) {
-    return String(value).trim().length <= max;
+function isValidISBN13(value) {
+    let cleaned = value.replace(/[-\s]/g, '');
+    return /^\d{13}$/.test(cleaned);
 }
 
 function onSubmitForm(evt) {
     evt.preventDefault();
-
+    console.log("JS validation running");
     errors = {};
-
-    const titleMin = Number(titleInput.dataset.minlength || 3);
-    const titleMax = Number(titleInput.dataset.maxlength || 255);
-     const authorMin = Number(auhtorInput.dataset.minlength || 1);
-    const authorMax = Number(authorInput.dataset.maxlength || 100);
-    const descMin = Number(descriptionInput.dataset.minlength || 10);
 
     // title
     if (!isRequired(titleInput.value)) {
         addError('title', 'Title is required.');
-    } else if (!isMinLength(titleInput.value, titleMin)) {
-        addError(
-            'title',
-            'Title must be at least ' + titleMin + ' characters.'
-        );
-    } else if (!isMaxLength(titleInput.value, titleMax)) {
-        addError('title', 'Title must be at most ' + titleMax + ' characters.');
-    }
-
-        // author
-    if (!isRequired(authorInput.value)) {
-        addError('author', 'Author is required.');
-    } else if (!isMinLength(authorInput.value, authorMin)) {
-        addError(
-            'author',
-            'Author must be at least ' + authorMin + ' characters.'
-        );
-    } else if (!isMaxLength(authorInput.value, authorMax)) {
-        addError('author', 'Author must be at most ' + authorMax + ' characters.');
-    }
-
-   
-     // publisher_ids
-    let publisherChecked = false;
-    for (let i = 0; i < pubisherIdsInput.length; i++) {
-        if (publisherIdsInput[i].checked) {
-            publisherChecked = true;
-            break;
-        }
-    }
-    if (!publisherChecked) {
-        addError('publisher_ids', 'Select at least one publisher.');
-    }
-
-    // description
-    if (!isRequired(descriptionInput.value)) {
-        addError('description', 'Description is required.');
-    } else if (!isMinLength(descriptionInput.value, descMin)) {
-        addError(
-            'description',
-            'Description must be at least ' + descMin + ' characters.'
-        );
     }
     
 
-    // format_ids
+    // author
+    if (!isRequired(authorInput.value)) {
+        addError('author', 'Author is required.');
+    }
+
+    // publisher
+    if (!isRequired(publisherIdInput.value)) {
+        addError('publisher_id', 'Select a publisher.');
+    }
+
+    // year
+    const currentYear = new Date().getFullYear();
+    const yearValue = Number(yearInput.value);
+
+    if (!isRequired(yearInput.value)) {
+        addError('year', 'Year is required.');
+    } else if (isNaN(yearValue)) {
+        addError('year', 'Year must be a number.');
+    } else if (yearValue < 1900 || yearValue > currentYear) {
+        addError('year', 'Year must be between 1900 and ' + currentYear + '.');
+    }
+
+    // isbn (must be 13 digits, ignore spaces/dashes)
+    if (!isRequired(isbnInput.value)) {
+        addError('isbn', 'ISBN is required.');
+    } else if (!isValidISBN13(isbnInput.value)) {
+        addError('isbn', 'ISBN must be 13 digits (spaces and dashes allowed).');
+    }
+
+    // formats
     let formatChecked = false;
     for (let i = 0; i < formatIdsInput.length; i++) {
         if (formatIdsInput[i].checked) {
@@ -137,22 +113,25 @@ function onSubmitForm(evt) {
             break;
         }
     }
+
     if (!formatChecked) {
         addError('format_ids', 'Select at least one format.');
+    }
+
+    // description
+    if (!isRequired(descriptionInput.value)) {
+        addError('description', 'Description is required.');
     }
 
     // image
     if (!imageInput.files || imageInput.files.length === 0) {
         addError('image', 'Image is required.');
     }
-
+    
     showErrorSummaryTop();
     showFieldErrors();
 
     if (Object.keys(errors).length === 0) {
-        alert(
-            'Book form is valid. In a real app, this would submit to the server.'
-        );
-        // bookForm.submit();
+        bookForm.submit();
     }
 }

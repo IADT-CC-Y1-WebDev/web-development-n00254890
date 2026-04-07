@@ -16,6 +16,9 @@ catch (PDOException $e) {
     <head>
         <?php include 'php/inc/head_content.php'; ?>
         <title>Books</title>
+        <style>
+            .hidden { display: none; }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -25,6 +28,7 @@ catch (PDOException $e) {
                     <a href="book_create.php">Add New Book</a>
                 </div>
             </div>
+
             <?php if (!empty($books)) { ?>
                 <div class="width-12 filters">
                     <form>
@@ -58,13 +62,17 @@ catch (PDOException $e) {
                 </div>
             <?php } ?>
         </div>
+
         <div class="container">
             <?php if (empty($books)) { ?>
                 <p>No books found.</p>
             <?php } else { ?>
                 <div class="width-12 cards">
                     <?php foreach ($books as $book) { ?>
-                        <div class="card">
+                        <div class="card"
+                             data-title="<?= h(strtolower($book->title)) ?>"
+                             data-publisher="<?= h($book->publisher_id) ?>"
+                             data-format="<?= h($book->format_id) ?>">
                             <div class="top-content">
                                 <h2>Title: <?= h($book->title) ?></h2>
                                 <p>Release Year: <?= h($book->year) ?></p>
@@ -73,15 +81,13 @@ catch (PDOException $e) {
                             <div class="bottom-content">
                                 <img src="images/<?= h($book->cover_filename) ?>" alt="Image for <?= h($book->title) ?>" />
                                 <div class="actions">
-                                    <a href="book_view.php?id=<?= h($book->id) ?>">View</a>/ 
-                                    <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a>/ 
+                                    <a href="book_view.php?id=<?= h($book->id) ?>">View</a> / 
+                                    <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a> / 
                                     <form action="book_delete.php" method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this book?');"
-                                        style="display:inline;">       
-                                           <input type="hidden" name="id" value="<?= h($book->id) ?>">
-                                              <button type="submit" class="button danger">
-                                                 Delete
-                                             </button>
+                                          onsubmit="return confirm('Are you sure you want to delete this book?');"
+                                          style="display:inline;">       
+                                        <input type="hidden" name="id" value="<?= h($book->id) ?>">
+                                        <button type="submit" class="button danger">Delete</button>
                                     </form>
                                 </div>
                             </div>
@@ -90,5 +96,6 @@ catch (PDOException $e) {
                 </div>
             <?php } ?>
         </div>
+          <script src="js/book-filters.js"></script>
     </body>
 </html>

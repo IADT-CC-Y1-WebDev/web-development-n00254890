@@ -44,6 +44,7 @@ try {
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="css/style.css">
         <?php include 'php/inc/head_content.php'; ?>
         <title>Edit Book</title>
     </head>
@@ -138,7 +139,7 @@ try {
                     </div>
              </div>       
             <div class="width-12"> 
-                    <div><img src="images/<?= $book->cover_filename ?>" />
+                    <div><img class="book-cover-preview" src="images/<?= $book->cover_filename ?>" />
                     <div class="input">
                         <label class="special" for="image">Image (optional):</label>
                         <div>

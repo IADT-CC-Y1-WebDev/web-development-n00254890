@@ -22,7 +22,9 @@ catch (PDOException $e) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
+         <?php include 'php/inc/head_content.php'; ?>
         <?php include 'php/inc/head_content.php'; ?>
+        <link rel="stylesheet" href="css/style.css">
         <title>View Book</title>
     </head>
     <body>
@@ -35,7 +37,7 @@ catch (PDOException $e) {
             <div class="width-12">
                 <div class="hCard">
                     <div class="bottom-content">
-                        <img src="/project/books/images/<?= h($book->cover_filename) ?>" alt="Book Cover">
+                        <img class="book-cover-preview" src="/project/books/images/<?= h($book->cover_filename) ?>" alt="Book Cover">
 
                     <div class="actions">
                         <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a> 

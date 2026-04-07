@@ -54,11 +54,10 @@ body {
 }
 
 .card img {
-	width: 100%;
-	margin-bottom: 10px;
-	object-fit: cover;
-	border: 1px solid #91418d;
-	height: 340px;
+    width: 100%;
+    aspect-ratio: 285/340;
+    object-fit: cover;
+    border: 1px solid #7c75f1;
 }
 
 .filters {
@@ -158,11 +157,19 @@ body {
 }
 
 .hCard img {
-	width: 840px;
-	margin-bottom: 10px;
-	object-fit: cover;
-	border: 1px solid #630653;
+    width: 340px;
+    height: 340px;
+    object-fit: cover;
+    border: 1px solid #7c75f1;
 }
+
+.book-cover-preview {
+    width: 340px;
+    height: 340px;
+    object-fit: cover; 
+    border: 1px solid #7c75f1;
+}
+
 form {
 	display: flex;
 	flex-direction: column;
