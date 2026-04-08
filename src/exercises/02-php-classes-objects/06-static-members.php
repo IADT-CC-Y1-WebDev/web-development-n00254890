@@ -36,7 +36,16 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Student.php';
+         require_once __DIR__ . '/classes/Student.php';
+
+         $s1 = new Student("Alice", "S001");
+        echo "Count: " . Student::getCount() . "<br>";
+
+        $s2 = new Student("Bob", "S002");
+        echo "Count: " . Student::getCount() . "<br>";
+
+        $s3 = new Student("Charlie", "S003");
+        echo "Count: " . Student::getCount() . "<br>";
         ?>
     </div>
 
@@ -71,7 +80,19 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Student.php';
+         require_once __DIR__ . '/classes/Student.php';
+
+        $s1 = new Student("Alice", "S001");
+        $s2 = new Student("Bob", "S002");
+        $s3 = new Student("Charlie", "S003");
+
+        echo "<strong>All Students:</strong><br>";
+        foreach (Student::findAll() as $s) {
+            echo $s . "<br>";
+        }
+
+        echo "<br><strong>Find S002:</strong><br>";
+        echo Student::findByNumber("S002");
         ?>
     </div>
 
@@ -92,8 +113,21 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Undergrad.php';
-        // require_once __DIR__ . '/classes/Postgrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Postgrad.php';
+
+        $s1 = new Student("Alice", "S001");
+        $u1 = new Undergrad("Bob", "U123", "Computing", "2");
+        $p1 = new Postgrad("Charlie", "P456", "Professor Smith", "CC");
+
+        echo "<strong>Registry:</strong><br>";
+        foreach (Student::findAll() as $s) {
+            echo $s . "<br>";
+        }
+
+        echo "<br><strong>Find U123:</strong><br>";
+        echo Student::findByNumber("U123");
+
         ?>
     </div>
 
@@ -122,7 +156,18 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Student.php';
+        require_once __DIR__ . '/classes/Student.php';
+
+        $s1 = new Student("Alice", "S001");
+        $s2 = new Student("Bob", "S002");
+        $s3 = new Student("Charlie", "S003");
+
+        echo "Count: " . Student::getCount() . "<br>";
+
+        $s2->leave();
+        unset($s2);
+
+        echo "Count after removal: " . Student::getCount() . "<br>";
         ?>
     </div>
 

@@ -131,7 +131,7 @@ echo "</pre>";
 // -----------------------------------------------------------------------------
 // TODO: Apply the selected theme to the page by setting inline styles on <body>
 ?>
-<body style="">
+<!-- <body style=" background: <?= isset($themes[$cookieTheme]) ? $themes[$cookieTheme]['bg'] : '#fff' ?>; color: <?= isset($themes[$cookieTheme]) ? $themes[$cookieTheme]['text'] : '#000000' ?>;              "> -->
 <?php
 // =============================================================================
 ?>

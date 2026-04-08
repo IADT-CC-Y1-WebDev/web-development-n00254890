@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="/exercises/css/style.css">
 </head>
 <body>
+    <?php
+        require_once __DIR__ . '/etc/config.php';
+         use College\Student;
+         use College\Undergrad;
+         use College\Postgrad;
+    ?>
+
     <div class="back-link">
         <a href="index.php">&larr; Back to Classes &amp; Objects</a>
         <a href="/examples/02-php-classes-objects/08-autoloader.php">View Example &rarr;</a>
@@ -38,16 +45,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // spl_autoload_register(function ($class) {
-        //     $path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
-        //     $file = __DIR__ . '/classes/' . $path . '.php';
-        //     if (file_exists($file)) {
-        //         require_once $file;
-        //     }
-        // });
-        // use College\Student;
-        // $student = new Student("Alice", "C12345");
-        // echo $student;
+        spl_autoload_register(function ($class) {
+             $path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+             $file = __DIR__ . '/classes/' . $path . '.php';
+             if (file_exists($file)) {
+                 require_once $file;
+             }
+         });
+         $student1 = new Student("Alice", "C12345");
+         echo $student1;
         ?>
     </div>
 
@@ -65,10 +71,11 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/etc/config.php';
-        // use College\Student;
-        // use College\Undergrad;
-        // use College\Postgrad;
+
+         $student2 = new Undergrad("Bob", "C12346", "Computer Science", "2");
+        $student3 = new Postgrad("Charlie", "C12347", "Professor Smith", "CC");
+        echo $student2 . "<br>";
+        echo $student3;
         ?>
     </div>
 
@@ -93,6 +100,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        foreach (Student::findAll() as $s) {
+        echo $s . "<br>";
+    }
+
+        $specific = Student::findByNumber("C12346");
+        echo "<strong>Found student:</strong> " . $specific;
         ?>
     </div>
 

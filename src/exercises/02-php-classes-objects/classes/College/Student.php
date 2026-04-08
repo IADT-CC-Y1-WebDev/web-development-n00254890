@@ -1,4 +1,7 @@
 <?php
+
+namespace College;
+
 class Student {
     protected $name;
     protected $number;

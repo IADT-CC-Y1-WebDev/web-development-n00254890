@@ -1,28 +1,4 @@
 <?php
-// =============================================================================
-// Exercise 8-10: Book Active Record Class
-//
-// TODO: Implement this class following the Active Record pattern.
-//
-// The class should represent the 'books' table with these columns:
-// - id (INT, auto-increment primary key)
-// - title (VARCHAR)
-// - author (VARCHAR)
-// - publisher_id (INT, foreign key to publishers table)
-// - year (INT)
-// - isbn (VARCHAR)
-// - description (TEXT)
-// - cover_filename (VARCHAR)
-//
-// Required methods:
-// - __construct($data = []) - Hydrate object from data array
-// - findAll() - Static method returning all books
-// - findById($id) - Static method returning single book or null
-// - findByPublisher($publisherId) - Static method returning books by publisher
-// - save() - Instance method to INSERT or UPDATE
-// - delete() - Instance method to DELETE
-// - toArray() - Instance method to convert to array
-// =============================================================================
 class Book
 {
     // public properties for each database column
@@ -39,59 +15,144 @@ class Book
     private $db;
 
     // =========================================================================
-    // Exercise 8: Book Class Basics
+    // Constructor: Accepts optional data array
     // =========================================================================
     public function __construct($data = [])
     {
-        // TODO: Get database connection from DB singleton
-        // TODO: If $data is not empty, populate properties using null coalescing operator
+        // Get PDO connection from DB singleton
+        $this->db = DB::getInstance()->getConnection();
+
+        // Hydrate properties if data provided
+        $this->id             = $data['id'] ?? null;
+        $this->title          = $data['title'] ?? null;
+        $this->author         = $data['author'] ?? null;
+        $this->publisher_id   = $data['publisher_id'] ?? null;
+        $this->year           = $data['year'] ?? null;
+        $this->isbn           = $data['isbn'] ?? null;
+        $this->description    = $data['description'] ?? null;
+        $this->cover_filename = $data['cover_filename'] ?? null;
     }
 
     // =========================================================================
-    // Exercise 9: Finder Methods
+    // Finder Methods
     // =========================================================================
     public static function findAll()
     {
-        // TODO: Implement this method
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->query("SELECT * FROM books");
+        $results = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $results[] = new self($row);
+        }
+        return $results;
     }
 
-    // =========================================================================
-    // Exercise 9: Finder Methods
-    // =========================================================================
     public static function findById($id)
     {
-        // TODO: Implement this method
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM books WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? new self($row) : null;
     }
 
-    // =========================================================================
-    // Exercise 9: Finder Methods
-    // =========================================================================
     public static function findByPublisher($publisherId)
     {
-        // TODO: Implement this method
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM books WHERE publisher_id = :publisher_id");
+        $stmt->execute([':publisher_id' => $publisherId]);
+        $results = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $results[] = new self($row);
+        }
+        return $results;
     }
 
     // =========================================================================
-    // Exercise 10: Complete Active Record
+    // Save Method: INSERT or UPDATE
     // =========================================================================
     public function save()
     {
-        // TODO: Implement this method
+        if ($this->id) {
+            // UPDATE existing book
+            $stmt = $this->db->prepare("
+                UPDATE books SET
+                    title = :title,
+                    author = :author,
+                    publisher_id = :publisher_id,
+                    year = :year,
+                    isbn = :isbn,
+                    description = :description,
+                    cover_filename = :cover_filename
+                WHERE id = :id
+            ");
+            return $stmt->execute([
+                ':title'          => $this->title,
+                ':author'         => $this->author,
+                ':publisher_id'   => $this->publisher_id,
+                ':year'           => $this->year,
+                ':isbn'           => $this->isbn,
+                ':description'    => $this->description,
+                ':cover_filename' => $this->cover_filename,
+                ':id'             => $this->id,
+            ]);
+        } else {
+            // INSERT new book
+            $stmt = $this->db->prepare("
+                INSERT INTO books (title, author, publisher_id, year, isbn, description, cover_filename)
+                VALUES (:title, :author, :publisher_id, :year, :isbn, :description, :cover_filename)
+            ");
+            $success = $stmt->execute([
+                ':title'          => $this->title,
+                ':author'         => $this->author,
+                ':publisher_id'   => $this->publisher_id,
+                ':year'           => $this->year,
+                ':isbn'           => $this->isbn,
+                ':description'    => $this->description,
+                ':cover_filename' => $this->cover_filename,
+            ]);
+
+            if ($success) {
+                $this->id = $this->db->lastInsertId();
+            }
+
+            return $success;
+        }
     }
 
     // =========================================================================
-    // Exercise 10: Complete Active Record
+    // Delete Method
     // =========================================================================
     public function delete()
     {
-        // TODO: Implement this method
+        if (!$this->id) {
+            return false; // nothing to delete
+        }
+
+        $stmt = $this->db->prepare("DELETE FROM books WHERE id = :id");
+        $result = $stmt->execute([':id' => $this->id]);
+
+        if ($result) {
+            $this->id = null; // reset id after deletion
+        }
+
+        return $result;
     }
 
     // =========================================================================
-    // Exercise 8: Book Class Basics
+    // Convert object to array
     // =========================================================================
     public function toArray()
     {
-        // TODO: Implement this method
+        return [
+            'id'             => $this->id,
+            'title'          => $this->title,
+            'author'         => $this->author,
+            'publisher_id'   => $this->publisher_id,
+            'year'           => $this->year,
+            'isbn'           => $this->isbn,
+            'description'    => $this->description,
+            'cover_filename' => $this->cover_filename,
+        ];
     }
 }

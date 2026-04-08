@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="/exercises/css/style.css">
 </head>
 <body>
+    <?php
+        require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Postgrad.php';
+    ?>
     <div class="back-link">
         <a href="index.php">&larr; Back to Classes &amp; Objects</a>
         <a href="/examples/02-php-classes-objects/05-method-overriding.php">View Example &rarr;</a>
@@ -32,8 +36,14 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Undergrad.php';
-        ?>
+        $student = new Student("Alice", "S001");
+        $undergrad = new Undergrad("Bob", "U123", "Computer Science", "2");
+
+        echo $student . "<br>";
+        echo $undergrad;
+    ?>
+
+
     </div>
 
     <!-- Exercise 2 -->
@@ -60,7 +70,8 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Postgrad.php';
+         $postgrad = new Postgrad("Charlie", "P456", "Professor Smith", "Creative Computing");
+         echo $postgrad;
         ?>
     </div>
 
@@ -77,8 +88,16 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        // require_once __DIR__ . '/classes/Undergrad.php';
-        // require_once __DIR__ . '/classes/Postgrad.php';
+        $student = new Student("Alice", "S001");
+        $undergrad = new Undergrad("Bob", "U123", "Computer Science", "2");
+        $postgrad = new Postgrad("Charlie", "P456", "Professor Smith", "Creative Computing");
+
+        $students = [$student, $undergrad, $postgrad];
+
+        foreach ($students as $s) {
+            echo $s . "<br>";
+        }
+
         ?>
     </div>
 
