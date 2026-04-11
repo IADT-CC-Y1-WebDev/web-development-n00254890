@@ -107,6 +107,7 @@ catch (PDOException $e) {
 
             <div class="input">
                 <button type="submit" id="submit_btn" class="button">Save Book</button>
+                <a href="index.php" class="button">Back to list</a>
             </div>
 
         </form>
@@ -121,5 +122,3 @@ catch (PDOException $e) {
     clearFormData();
     clearFormErrors();
     ?>
-</body>
-</html>

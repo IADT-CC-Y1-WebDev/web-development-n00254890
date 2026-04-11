@@ -24,9 +24,7 @@ catch (PDOException $e) {
         <div class="container">
             <div class="width-12 header">
                 <?php require 'php/inc/flash_message.php'; ?>
-                <div class="button">
-                    <a href="book_create.php">Add New Book</a>
-                </div>
+                    <a href="book_create.php" class="button">Add New Book</a>
             </div>
 
             <?php if (!empty($books)) { ?>
@@ -45,16 +43,28 @@ catch (PDOException $e) {
                                 <?php } ?>
                             </select>
                         </div>
-                        <div>
-                            <label for="format_filter">Format:</label>
-                            <select id="format_filter" name="format_filter">
-                                <option value="">All Formats</option>
-                                <?php foreach ($formats as $format) { ?>
-                                    <option value="<?= h($format->id) ?>"><?= h($format->name) ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div>
+
+                            <div class="filter-dropdown">
+                                <label>Format:</label>
+
+                                <div class="dropdown">
+                                    <button type="button" class="dropdown-btn">
+                                        Select formats ▾
+                                    </button>
+
+                                    <div class="dropdown-content">
+                                        <?php foreach ($formats as $format) { ?>
+                                            <label class="dropdown-item">
+                                                <input type="checkbox" name="format_filter[]" value="<?= h($format->id) ?>">
+                                                <?= h($format->name) ?>
+                                            </label>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                                                        
+
+                        <div class="filter-actions">
                             <button type="button" id="apply_filters">Apply Filters</button>
                             <button type="button" id="clear_filters">Clear Filters</button>
                         </div>
@@ -69,10 +79,11 @@ catch (PDOException $e) {
             <?php } else { ?>
                 <div class="width-12 cards">
                     <?php foreach ($books as $book) { ?>
-                        <div class="card"
-                             data-title="<?= h(strtolower($book->title)) ?>"
-                             data-publisher="<?= h($book->publisher_id) ?>"
-                             data-format="<?= h($book->format_id) ?>">
+                    <div class="card"
+                        data-title="<?= h(strtolower($book->title)) ?>"
+                        data-publisher="<?= h($book->publisher_id) ?>"
+                        data-format="<?= h(implode(',', $book->format_ids ?? [])) ?>">
+
                             <div class="top-content">
                                 <h2>Title: <?= h($book->title) ?></h2>
                                 <p>Release Year: <?= h($book->year) ?></p>

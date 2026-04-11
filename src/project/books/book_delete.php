@@ -6,6 +6,7 @@
     require_once 'php/lib/utils.php';
     require_once 'php/classes/Validator.php';
     require_once 'php/classes/ImageUpload.php';
+    require_once 'php/classes/Book.php';
 
     startSession();
 

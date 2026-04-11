@@ -23,7 +23,6 @@ catch (PDOException $e) {
 <html lang="en">
     <head>
          <?php include 'php/inc/head_content.php'; ?>
-        <?php include 'php/inc/head_content.php'; ?>
         <link rel="stylesheet" href="css/style.css">
         <title>View Book</title>
     </head>
@@ -37,11 +36,18 @@ catch (PDOException $e) {
             <div class="width-12">
                 <div class="hCard">
                     <div class="bottom-content">
-                        <img class="book-cover-preview" src="/project/books/images/<?= h($book->cover_filename) ?>" alt="Book Cover">
+                        <img src="/project/books/images/<?= h($book->cover_filename) ?>" alt="Book Cover">
 
                     <div class="actions">
                         <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a> 
-                        <a href="book_delete.php?id=<?= h($book->id) ?>">Delete</a>
+                         /
+                        <form action="book_delete.php" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this book?');"
+                            style="display:inline;">
+                            <input type="hidden" name="id" value="<?= h($book->id) ?>">
+                            <button type="submit">Delete</button>
+                        </form>
+                         / 
                         <a href="index.php">Back to list</a>
                     </div>
                     </div>

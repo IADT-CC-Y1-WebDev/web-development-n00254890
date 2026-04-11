@@ -29,7 +29,7 @@ body {
 	font-family: "IBM Plex Serif";
 	margin-bottom: 12px;
 	font-weight: 300;
-	color: #076ca7;
+	color: #64036d;
 }
 
 .card p {
@@ -42,22 +42,32 @@ body {
 	justify-content: flex-end;
 }
 
-.card .actions a {
+.card .actions a,
+.card .actions button {
 	font-weight: 600;
 	color: #f364c3;
 	font-size: 13px;
 	text-transform: uppercase;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	text-decoration: none;
+	font-family: inherit;
 }
 
-.card .actions a:hover {
+
+.card .actions a:hover,
+.card .actions button:hover {
 	color: #e92a93;
 }
 
 .card img {
     width: 100%;
-    aspect-ratio: 285/340;
+    margin-bottom: 10px;
     object-fit: cover;
     border: 1px solid #7c75f1;
+    height: 340px;
 }
 
 .filters {
@@ -90,13 +100,18 @@ body {
 	padding: 5px;
 }
 
-.filters form button {
+.filters form .filter-actions button {
 	font-size: 13px;
 	background-color: #b051d6;
 	padding: 5px 10px;
 	color: #ffffff;
 	border: 1px solid #700374;
 	border-radius: 5px;
+}
+
+.filters form .filter-actions button:hover {
+	background-color: #700374;
+	color: #ffffff;
 }
 
 .header {
@@ -112,6 +127,11 @@ body {
 	color: #ececec;
 	border: 1px solid #bb2dc0;
 	border-radius: 5px;
+}
+
+.button:hover {
+	background-color: #e92a93;
+	color: #ffffff;
 }
 
 .hCard {
@@ -145,27 +165,36 @@ body {
 	justify-content: flex-end;
 }
 
-.hCard .actions a {
+.hCard .actions a,
+.hCard .actions button {
 	font-weight: 600;
 	color: #a33ab8;
 	font-size: 13px;
 	text-transform: uppercase;
+	background: none;
+	border: none;
+	cursor: pointer;
+	text-decoration: none;
+	padding: 0;
 }
 
-.hCard .actions a:hover {
+.hCard .actions a:hover,
+.hCard .actions button:hover {
 	color: #511361;
 }
+
 
 .hCard img {
     width: 340px;
     height: 340px;
+	margin-bottom: 10px;
     object-fit: cover;
     border: 1px solid #7c75f1;
 }
 
 .book-cover-preview {
-    width: 340px;
-    height: 340px;
+    width: 440px;
+    height: 440px;
     object-fit: cover; 
     border: 1px solid #7c75f1;
 }
@@ -194,4 +223,39 @@ form {
 	color: #252525;
 	font-weight: 900;
 }
+.filter-dropdown {
+	font-size: 12px;
+    padding: 5px;
+}
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-btn {
+    padding: 3px 10px;
+    border: 1px solid #6a6a6a;
+	border-radius: 3px;
+    background: white;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 10;
+    min-width: 180px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 4px 0;
+}

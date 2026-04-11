@@ -6,6 +6,7 @@ let cards = document.querySelectorAll('.card');
 
 let form = document.querySelector('.filters form');
 
+
 applyBtn.addEventListener('click', (event) => {
     event.preventDefault();
     applyFilters();
@@ -33,7 +34,7 @@ function applyFilters() {
 }
 
 function sortCards(cards, sortBy) {
-    const list = cards.slice();
+    const list = Array.from(cards);
 
     list.sort((a, b) => {
         let titleA = a.dataset.title.toLowerCase();
@@ -49,11 +50,15 @@ function sortCards(cards, sortBy) {
 function cardMatches(card, filters) {
     let title = card.dataset.title.toLowerCase();
     let publisher = card.dataset.publisher;
-    let format = card.dataset.format;
+
+    let cardFormats = (card.dataset.format || '').split(',');
 
     let matchTitle = filters.titleFilter === "" || title.includes(filters.titleFilter);
     let matchPublisher = filters.publisherFilter === "" || publisher === filters.publisherFilter;
-    let matchFormat = filters.formatFilter === "" || format === filters.formatFilter;
+
+    let matchFormat =
+        filters.formatFilter.length === 0 ||
+        filters.formatFilter.some(f => cardFormats.includes(f));
 
     return matchTitle && matchPublisher && matchFormat;
 }
@@ -61,18 +66,16 @@ function cardMatches(card, filters) {
 function getFilters() {
     const titleEl = form.elements['title_filter'];
     const publisherEl = form.elements['publisher_filter'];
-    const formatEl = form.elements['format_filter'];
+    const formatCheckboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]:checked');
 
     let titleFilter = (titleEl.value || '').trim().toLowerCase();
     let publisherFilter = publisherEl.value || '';
-    let formatFilter = formatEl.value || '';
-    let sortBy = 'title_asc'; // you can add a sort dropdown if needed
+    let formatFilter = Array.from(formatCheckboxes).map(cb => cb.value);
 
     return {
         titleFilter,
         publisherFilter,
-        formatFilter,
-        sortBy
+        formatFilter
     };
 }
 

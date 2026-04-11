@@ -1,8 +1,9 @@
 <?php
-require_once 'php/lib/config.php';
-require_once 'php/lib/session.php';
-require_once 'php/lib/forms.php';
-require_once 'php/lib/utils.php';
+require_once 'php/classes/Validator.php';
+require_once 'php/classes/ImageUpload.php';
+require_once 'php/classes/BookFormat.php';
+require_once 'php/classes/Publisher.php';
+require_once 'php/classes/Format.php';
 
 startSession();
 
@@ -101,7 +102,7 @@ try {
     $book->save();
 
     // Delete existing format associations
-     Bookformat::deleteByBook($book->id);
+     BookFormat::deleteByBook($book->id);
      // Create new format associations
      if (!empty($data['format_ids']) && is_array($data['format_ids'])) {
          foreach ($data['format_ids'] as $formatId) {
@@ -122,8 +123,8 @@ try {
 }
 catch (Exception $e) {
     // Error - clean up uploaded image
-    if ($cover_Filename) {
-        $uploader->deleteImage($cover_Filename);
+    if ($cover_filename) {
+        $uploader->deleteImage($cover_filename);
     }
 
     // Set error flash message

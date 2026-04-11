@@ -53,7 +53,7 @@ function showFieldErrors() {
     isbnError.innerHTML = errors.isbn || '';
     formatIdError.innerHTML = errors.format_ids || '';
     descriptionError.innerHTML = errors.description || '';
-    imageError.innerHTML = errors.image || '';
+    imageError.innerHTML = errors.cover || '';
 }
 
 function isRequired(value) {

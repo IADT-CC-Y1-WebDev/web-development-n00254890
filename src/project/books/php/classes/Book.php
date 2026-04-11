@@ -10,6 +10,7 @@ class Book {
     public $isbn;
     public $description;
     public $cover_filename;
+    public $format_ids = [];
 
     private $db;
 
@@ -31,16 +32,38 @@ class Book {
 
     public static function findAll() {
         $db = DB::getInstance()->getConnection();
+
         $stmt = $db->prepare("SELECT * FROM books ORDER BY title");
         $stmt->execute();
 
         $books = [];
+
         while ($row = $stmt->fetch()) {
-            $books[] = new Book($row);
+
+            // Create book object
+            $book = new Book($row);
+
+            // Safety check
+            if (!$book->id) {
+                continue;
+            }
+
+            // Load formats for this book
+            $formats = Format::findByBook($book->id);
+
+            // Convert to array of IDs
+            $book->format_ids = array_map(
+                fn($f) => $f->id,
+                $formats
+            );
+
+            // Add to result list
+            $books[] = $book;
         }
 
         return $books;
     }
+
 
     public static function findById($id) {
         $db = DB::getInstance()->getConnection();
