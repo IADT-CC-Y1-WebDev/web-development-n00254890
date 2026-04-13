@@ -58,16 +58,19 @@ try {
 
         </div>
             <div class="width-12">
-                <form action="book_update.php" method="POST" enctype="multipart/form-data">
+                <form action="book_update.php" id="book_form" method="POST" enctype="multipart/form-data" novalidate>
+                    <div id="error_summary_top" class="error-summary" style="display:none;" role="alert"></div>
+                    
                     <div class="input">
                         <input type="hidden" name="id" value="<?= h($book->id) ?>">
                     </div>
+
                      <div class="width-12">
                     <div class="input">
                         <label class="special" for="title">Title:</label>
                         <div>
                             <input type="text" id="title" name="title" value="<?= old('title', $book->title) ?>" required>
-                            <p><?= error('title') ?></p>
+                            <p id="title_error"><?= error('title')?></p>
                         </div>
                     </div>
             </div>
@@ -76,7 +79,7 @@ try {
                         <label class="special" for="author">Author:</label>
                         <div>
                             <input type="text" id="author" name="author" value="<?= old('author', $book->author) ?>" required>
-                            <p><?= error('author') ?></p>
+                            <p id="author_error"><?= error('author')?></p>
                         </div>
                 </div>
                 <div class="width-12">
@@ -92,7 +95,7 @@ try {
                                 </option>
                             <?php endforeach; ?>
                                 </select>
-                                <p><?= error('publisher_id') ?></p>
+                                <p id="publisher_id_error"><?= error('publisher_id')?></p>
                         </div>
                 </div>       
              <div class="width-12">       
@@ -100,7 +103,7 @@ try {
                         <label class="special" for="year">Year:</label>
                         <div>
                             <input type="number" id="year" name="year" value="<?= old('year', $book->year) ?>" required>
-                            <p><?= error('year') ?></p>
+                             <p id="year_error"><?= error('year')?></p>
                         </div>
                     </div>
               </div> 
@@ -108,7 +111,7 @@ try {
                 <div class="input">
                     <label class="special" for="isbn">ISBN:</label>
                     <input type="text" id="isbn" name="isbn" value="<?= old('isbn', $book->isbn) ?>" required>
-                    <p><?= error('isbn')?></p>
+                    <p id="isbn_error"><?= error('isbn')?></p>
                 </div>
 
                 <div class="input">
@@ -126,7 +129,7 @@ try {
                                 </div>
                             <?php } ?>
                         </div>
-                        <p><?= error('format_ids') ?></p>
+                        <p id="format_id_error"><?= error('format_ids[]')?></p>
                     </div>
 
             <div class="width-12">        
@@ -134,7 +137,7 @@ try {
                         <label class="special" for="description">Description:</label>
                         <div>
                             <textarea id="description" name="description" required><?= h(old('description', $book->description)) ?></textarea>
-                            <p><?= error('description') ?></p>
+                            <p id="description_error"><?= error('description')?></p>
                         </div>
                     </div>
              </div>       
@@ -144,20 +147,22 @@ try {
                         <label class="special" for="image">Image (optional):</label>
                         <div>
                             <input type="file" id="image" name="image" accept="image/*">
-                            <p><?= error('image') ?></p>
+                            <p id="image_error"><?= error('image')?></p>
                         </div>
                     </div>
              </div>       
              <div class="width-12">       
-                    <div class="input">
-                        <button class="button" type="submit">Update Book</button>
-                        <div class="button"><a href="index.php">Cancel</a></div>
-                    </div>
+                    
+                <div class="input">
+                    <button type="submit" id="submit_btn" class="button">Edit Book</button>
+                        <a href="index.php" class="button">Back to list</a>
+                </div>
                     </div>
                 </form>
                 </div>
             </div>
         </div>
+        <script src="js/book-edit.js"></script>
     </body>
 </html>
 <?php

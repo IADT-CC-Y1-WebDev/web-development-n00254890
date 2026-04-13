@@ -25,10 +25,12 @@ function applyFilters() {
         card.classList.toggle('hidden', !match);
     });
 
-    // Optional: sort by title (alphabetical) if needed
+    //sort by title alphabetical
     let cardsArray = Array.from(cards);
-    const sorted = sortCards(cardsArray, filters.sortBy);
-    sorted.forEach(card => {
+    const sortedTitleCards = sortCards(cardsArray, "title_asc");
+    const sortedDate = sortCardsDate(sortedTitleCards, filters.sortBy);
+
+    sortedDate.forEach(card => {
         cardsContainer.appendChild(card);
     });
 }
@@ -41,11 +43,34 @@ function sortCards(cards, sortBy) {
         let titleB = b.dataset.title.toLowerCase();
 
         if (sortBy === "title_desc") return titleB.localeCompare(titleA);
-        return titleA.localeCompare(titleB); // default ascending
+        return titleA.localeCompare(titleB); // ascending
     });
 
     return list;
 }
+
+    function sortCardsDate(cards, sortBy) {
+
+        return cards.sort((a, b) => {
+
+            //date published
+            let dateA = Number(a.dataset.date);
+            let dateB = Number(b.dataset.date);
+
+            //dateadded
+            let addedA = Number(a.dataset.added);
+            let addedB = Number(b.dataset.added);
+
+            if (sortBy === "date_desc") return dateB - dateA;
+            if (sortBy === "date_asc") return dateA - dateB;
+
+            if (sortBy === "added_desc") return addedB - addedA;
+            if (sortBy === "added_asc") return addedA - addedB;
+
+            return 0;
+        });
+    }
+
 
 function cardMatches(card, filters) {
     let title = card.dataset.title.toLowerCase();
@@ -67,6 +92,7 @@ function getFilters() {
     const titleEl = form.elements['title_filter'];
     const publisherEl = form.elements['publisher_filter'];
     const formatCheckboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]:checked');
+  const sortBy = form.elements['sort_by'].value || 'date_desc'
 
     let titleFilter = (titleEl.value || '').trim().toLowerCase();
     let publisherFilter = publisherEl.value || '';
@@ -75,7 +101,8 @@ function getFilters() {
     return {
         titleFilter,
         publisherFilter,
-        formatFilter
+        formatFilter,
+        sortBy
     };
 }
 

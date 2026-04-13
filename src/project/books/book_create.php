@@ -113,7 +113,7 @@ catch (PDOException $e) {
         </form>
     </div>
 
-    <script src="js/book-form.js"></script>
+    <script src="js/book-create.js"></script>
 
     </body>
     </html>

@@ -37,7 +37,7 @@ catch (PDOException $e) {
                         <div>
                             <label for="publisher_filter">Publisher:</label>
                             <select id="publisher_filter" name="publisher_filter">
-                                <option value="">All Publishers</option>
+                                <option value="">Select Publishers</option>
                                 <?php foreach ($publishers as $publisher) { ?>
                                     <option value="<?= h($publisher->id) ?>"><?= h($publisher->name) ?></option>
                                 <?php } ?>
@@ -51,7 +51,6 @@ catch (PDOException $e) {
                                     <button type="button" class="dropdown-btn">
                                         Select formats ▾
                                     </button>
-
                                     <div class="dropdown-content">
                                         <?php foreach ($formats as $format) { ?>
                                             <label class="dropdown-item">
@@ -61,6 +60,17 @@ catch (PDOException $e) {
                                         <?php } ?>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class ="filter-dropdown">
+                                <label for="sort_by">Sort by:</label>
+                                    <select id="sort_by" name="sort_by">
+                                        <option value="">Select Date</option>
+                                        <option value="date_desc">Newest Date</option>
+                                        <option value="date_asc">Oldest Date</option>
+                                        <option value="added_desc">Newest Added</option>
+                                        <option value="added_asc">Oldest Added</option>
+                                    </select>
                             </div>
                                                         
 
@@ -82,12 +92,15 @@ catch (PDOException $e) {
                     <div class="card"
                         data-title="<?= h(strtolower($book->title)) ?>"
                         data-publisher="<?= h($book->publisher_id) ?>"
-                        data-format="<?= h(implode(',', $book->format_ids ?? [])) ?>">
+                        data-format="<?= h(implode(',', $book->format_ids ?? [])) ?>"
+                        data-date="<?= strtotime($book->year) ?>"
+                        data-added="<?= $book->id ?>">
 
                             <div class="top-content">
                                 <h2>Title: <?= h($book->title) ?></h2>
                                 <p>Release Year: <?= h($book->year) ?></p>
                                 <p>Author: <?= h($book->author) ?></p>
+                                
                             </div>
                             <div class="bottom-content">
                                 <img src="images/<?= h($book->cover_filename) ?>" alt="Image for <?= h($book->title) ?>" />
