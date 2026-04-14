@@ -53,10 +53,11 @@ try {
             <div class="width-12">
                 <?php require 'php/inc/flash_message.php'; ?>
             </div>
+
             <div class="width-12">
                 <h1>Edit Book</h1>
+            </div>
 
-        </div>
             <div class="width-12">
                 <form action="book_update.php" id="book_form" method="POST" enctype="multipart/form-data" novalidate>
                     <div id="error_summary_top" class="error-summary" style="display:none;" role="alert"></div>
@@ -65,7 +66,6 @@ try {
                         <input type="hidden" name="id" value="<?= h($book->id) ?>">
                     </div>
 
-                     <div class="width-12">
                     <div class="input">
                         <label class="special" for="title">Title:</label>
                         <div>
@@ -73,48 +73,46 @@ try {
                             <p id="title_error"><?= error('title')?></p>
                         </div>
                     </div>
-            </div>
-                <div class="width-12">
+
                     <div class="input">
                         <label class="special" for="author">Author:</label>
                         <div>
                             <input type="text" id="author" name="author" value="<?= old('author', $book->author) ?>" required>
                             <p id="author_error"><?= error('author')?></p>
                         </div>
-                </div>
-                <div class="width-12">
-                      <div class="input">
+                    </div>
+
+                    <div class="input">
                         <label class="special" for="publisher_id">Publisher:</label>
                         <div>
                             <select id="publisher_id" name="publisher_id">
                                 <option value="">--select Publisher--</option>
-                              <?php foreach ($publishers as $pub): ?>
-                                <option value="<?= h($pub->id) ?>"
-                                    <?= chosen('publisher_id', $pub->id, $book->publisher_id) ? "selected" : "" ?>>
-                                    <?= h($pub->name) ?>
-                                </option>
-                            <?php endforeach; ?>
-                                </select>
-                                <p id="publisher_id_error"><?= error('publisher_id')?></p>
+                                <?php foreach ($publishers as $pub): ?>
+                                    <option value="<?= h($pub->id) ?>"
+                                        <?= chosen('publisher_id', $pub->id, $book->publisher_id) ? "selected" : "" ?>>
+                                        <?= h($pub->name) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <p id="publisher_id_error"><?= error('publisher_id')?></p>
                         </div>
-                </div>       
-             <div class="width-12">       
+                    </div>       
+
                     <div class="input">
                         <label class="special" for="year">Year:</label>
                         <div>
                             <input type="number" id="year" name="year" value="<?= old('year', $book->year) ?>" required>
-                             <p id="year_error"><?= error('year')?></p>
+                            <p id="year_error"><?= error('year')?></p>
                         </div>
                     </div>
-              </div> 
 
-                <div class="input">
-                    <label class="special" for="isbn">ISBN:</label>
-                    <input type="text" id="isbn" name="isbn" value="<?= old('isbn', $book->isbn) ?>" required>
-                    <p id="isbn_error"><?= error('isbn')?></p>
-                </div>
+                    <div class="input">
+                        <label class="special" for="isbn">ISBN:</label>
+                        <input type="text" id="isbn" name="isbn" value="<?= old('isbn', $book->isbn) ?>" required>
+                        <p id="isbn_error"><?= error('isbn')?></p>
+                    </div>
 
-                <div class="input">
+                    <div class="input">
                         <label class="special">Formats:</label>
                         <div>
                             <?php foreach ($formats as $format) { ?>
@@ -124,7 +122,7 @@ try {
                                         name="format_ids[]" 
                                         value="<?= h($format->id) ?>"
                                         <?= chosen('format_ids', $format->id, $bookFormatIds) ? "checked" : "" ?>
-                                        >
+                                    >
                                     <label for="format_<?= h($format->id) ?>"><?= h($format->name) ?></label>
                                 </div>
                             <?php } ?>
@@ -132,7 +130,6 @@ try {
                         <p id="format_id_error"><?= error('format_ids[]')?></p>
                     </div>
 
-            <div class="width-12">        
                     <div class="input">
                         <label class="special" for="description">Description:</label>
                         <div>
@@ -140,26 +137,26 @@ try {
                             <p id="description_error"><?= error('description')?></p>
                         </div>
                     </div>
-             </div>       
-            <div class="width-12"> 
-                    <div><img class="book-cover-preview" src="images/<?= $book->cover_filename ?>" />
-                    <div class="input">
-                        <label class="special" for="image">Image (optional):</label>
-                        <div>
-                            <input type="file" id="image" name="image" accept="image/*">
-                            <p id="image_error"><?= error('image')?></p>
+
+                    <div>
+                        <img class="book-cover-preview" src="images/<?= $book->cover_filename ?>" />
+                        <div class="input">
+                            <label class="special" for="image">Image (optional):</label>
+                            <div>
+                                <input type="file" id="image" name="image" accept="image/*">
+                                <p id="image_error"><?= error('image')?></p>
+                            </div>
                         </div>
                     </div>
-             </div>       
-             <div class="width-12">       
-                    
-                <div class="input">
-                    <button type="submit" id="submit_btn" class="button">Edit Book</button>
-                        <a href="index.php" class="button">Back to list</a>
-                </div>
+
+                    <div class="width-12">
+                        <div class="input">
+                            <button type="submit" id="submit_btn" class="button">Edit Book</button>
+                            <a href="index.php" class="button">Back to list</a>
+                        </div>
                     </div>
+
                 </form>
-                </div>
             </div>
         </div>
         <script src="js/book-edit.js"></script>

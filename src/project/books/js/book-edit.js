@@ -20,7 +20,8 @@ let descriptionError = document.getElementById('description_error');
 
 let errors = {};
 
-submitBtn.addEventListener('submit', onSubmitForm);
+//submits the form if validation passes, otherwise shows errors.
+bookForm.addEventListener('submit', onSubmitForm);
 
 function addError(fieldName, message) {
     errors[fieldName] = message;

@@ -29,7 +29,7 @@ class Format {
         return $formats;
     }
 
-    // Find formats by book ID
+    // Find formats by book ID *join with book_format table*
     public static function findByBook($bookId) {
         $db = DB::getInstance()->getConnection();
         $stmt = $db->prepare("

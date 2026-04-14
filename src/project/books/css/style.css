@@ -70,6 +70,15 @@ body {
     height: 340px;
 }
 
+.tag-new {
+    background: #28a745;
+    color: white;
+    font-size: 12px;
+    padding: 3px 6px;
+    margin-left: 8px;
+    border-radius: 4px;
+}
+
 .filters {
 	background-color: #ffd4fe;
 	padding: 10px;

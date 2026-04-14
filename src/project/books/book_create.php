@@ -37,14 +37,14 @@ catch (PDOException $e) {
             <div class="input">
                 <label class="special" for="title">Title:</label>
                 <input type="text" id="title" name="title">
-                <p id="title_error" class="error"></p>
+                <p id="title_error"><?= error('title')?></p>
             </div>
 
             <!-- Author -->
             <div class="input">
                 <label class="special" for="author">Author:</label>
                 <input type="text" id="author" name="author">
-                <p id="author_error" class="error"></p>
+                <p id="author_error"><?= error('author')?></p>
             </div>
 
             <!-- Publisher -->
@@ -58,21 +58,21 @@ catch (PDOException $e) {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <p id="publisher_id_error" class="error"></p>
+                <<p id="publisher_id_error"><?= error('publisher_id')?></p>
             </div>
 
             <!-- Year -->
             <div class="input">
                 <label class="special" for="year">Year:</label>
                 <input type="number" id="year" name="year">
-                <p id="year_error" class="error"></p>
+                <p id="year_error"><?= error('year')?></p>
             </div>
 
             <!-- ISBN -->
             <div class="input">
                 <label class="special" for="isbn">ISBN:</label>
                 <input type="text" id="isbn" name="isbn">
-                <p id="isbn_error" class="error"></p>
+                <p id="isbn_error"><?= error('isbn')?></p>
             </div>
 
             <!-- Formats -->
@@ -87,22 +87,21 @@ catch (PDOException $e) {
                         <label><?= h($format->name) ?></label>
                     </div>
                 <?php endforeach; ?>
-
-                <p id="format_id_error" class="error"></p>
+                <p id="format_id_error"><?= error('format_ids[]')?></p>
             </div>
 
             <!-- Description -->
             <div class="input">
                 <label class="special" for="description">Description:</label>
                 <textarea id="description" name="description"></textarea>
-                <p id="description_error" class="error"></p>
+                <p id="description_error"><?= error('description')?></p>
             </div>
 
             <!-- Cover -->
             <div class="input">
                 <label class="special" for="cover">Cover Image:</label>
                 <input type="file" id="cover" name="cover">
-                <p id="image_error" class="error"></p>
+                <p id="image_error"><?= error('image')?></p>
             </div>
 
             <div class="input">

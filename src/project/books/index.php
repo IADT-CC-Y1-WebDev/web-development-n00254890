@@ -10,6 +10,16 @@ try {
 catch (PDOException $e) {
     die("<p>PDO Exception: " . $e->getMessage() . "</p>");
 }
+
+//latest id for tag 
+$latestId = 0;
+
+foreach ($books as $b) {
+    if ($b->id > $latestId) {
+        $latestId = $b->id;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,14 +102,20 @@ catch (PDOException $e) {
                     <div class="card"
                         data-title="<?= h(strtolower($book->title)) ?>"
                         data-publisher="<?= h($book->publisher_id) ?>"
-                        data-format="<?= h(implode(',', $book->format_ids ?? [])) ?>"
-                        data-date="<?= strtotime($book->year) ?>"
+                        data-format="<?= h(implode(',', $book->format_ids ?? [])) ?>" // implode turns array into comma-separated string for easier filtering
+                        data-date="<?= strtotime($book->year) ?>" // store year as timestamp for sorting
                         data-added="<?= $book->id ?>">
 
                             <div class="top-content">
-                                <h2>Title: <?= h($book->title) ?></h2>
+                
+                                <h2>Title: <?= h($book->title) ?>
+                                <?php if ($book->id == $latestId): ?>
+                                    <span class="tag-new">NEW</span>
+                                <?php endif; ?>
+                                </h2>
                                 <p>Release Year: <?= h($book->year) ?></p>
                                 <p>Author: <?= h($book->author) ?></p>
+                                <p>Formats: <?= h(implode(', ', $book->getFormatNames())) ?></p>
                                 
                             </div>
                             <div class="bottom-content">

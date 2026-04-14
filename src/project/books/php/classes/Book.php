@@ -10,7 +10,7 @@ class Book {
     public $isbn;
     public $description;
     public $cover_filename;
-    public $format_ids = [];
+    public $format_ids = []; //multi value array to hold format ids for book
 
     private $db;
 
@@ -30,17 +30,17 @@ class Book {
         }
     }
 
-    public static function findAll() {
+    public static function findAll() { //get all books
         $db = DB::getInstance()->getConnection();
 
         $stmt = $db->prepare("SELECT * FROM books ORDER BY title");
         $stmt->execute();
 
-        $books = [];
+        $books = []; //array to hold book objects
 
         while ($row = $stmt->fetch()) {
 
-            // Create book object
+            // Create book object 
             $book = new Book($row);
 
             // Safety check
@@ -51,7 +51,7 @@ class Book {
             // Load formats for this book
             $formats = Format::findByBook($book->id);
 
-            // Convert to array of IDs
+            // Convert to array of IDs using mapping function *easier for js filtering*
             $book->format_ids = array_map(
                 fn($f) => $f->id,
                 $formats
@@ -156,4 +156,16 @@ class Book {
             'cover_filename' => $this->cover_filename
         ];
     }
+    //format ids to names for card display 
+    public function getFormatNames() {
+    $formats = Format::findByBook($this->id);
+
+    $names = []; //array to hold format names
+    foreach ($formats as $format) {
+        $names[] = $format->name;
+    }
+
+    return $names;
+}
+
 }

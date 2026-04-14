@@ -22,7 +22,7 @@ let imageError = document.getElementById('image_error');
 
 let errors = {};
 
-submitBtn.addEventListener('click', onSubmitForm);
+bookForm.addEventListener('submit', onSubmitForm);
 
 function addError(fieldName, message) {
     errors[fieldName] = message;
@@ -53,7 +53,7 @@ function showFieldErrors() {
     isbnError.innerHTML = errors.isbn || '';
     formatIdError.innerHTML = errors.format_ids || '';
     descriptionError.innerHTML = errors.description || '';
-    imageError.innerHTML = errors.cover || '';
+    imageError.innerHTML = errors.image || '';
 }
 
 function isRequired(value) {
@@ -67,7 +67,7 @@ function isValidISBN13(value) {
 
 function onSubmitForm(evt) {
     evt.preventDefault();
-    console.log("JS validation running");
+
     errors = {};
 
     // title
