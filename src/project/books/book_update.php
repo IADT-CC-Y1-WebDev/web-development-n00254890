@@ -37,13 +37,14 @@ try {
 
     // Define validation rules
     $year = date("Y");
+    $data['isbn'] = preg_replace('/[-\s]/', '', $data['isbn']); // Remove dashes and spaces for validation
     $rules = [
         'id' => 'required|integer|min:1|max:255',
         'title' => 'required|notempty|min:1|max:255',
         'author' => 'required|notempty|min:1|max:255',
         'publisher_id' => 'required|notempty|integer',
         'year'=> 'required|notempty|integer|minvalue:1900|maxvalue:'. $year,
-        'isbn' => "required|nonempty|min:13|max:13",
+        'isbn' => 'required|nonempty|regex:/^\d{13}$/',
         'description' => 'required|notempty|min:10|max:5000',
         'format_ids' => 'required|array|min:1|max:10',
         'image' => 'file|image|mimes:jpg,jpeg,png|max_file_size:5242880'

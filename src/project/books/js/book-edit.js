@@ -19,10 +19,9 @@ let formatIdError = document.getElementById('format_id_error');
 let descriptionError = document.getElementById('description_error');
 
 let errors = {};
-
+console.log("form:", bookForm);
 //submits the form if validation passes, otherwise shows errors.
 bookForm.addEventListener('submit', onSubmitForm);
-
 function addError(fieldName, message) {
     errors[fieldName] = message;
 }
@@ -65,6 +64,7 @@ function isValidISBN13(value) {
 
 function onSubmitForm(evt) {
     evt.preventDefault();
+    console.log("ISBN:", isbnInput.value);
     console.log("JS validation running");
     errors = {};
 

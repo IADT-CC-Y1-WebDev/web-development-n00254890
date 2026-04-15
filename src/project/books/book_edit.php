@@ -127,7 +127,7 @@ try {
                                 </div>
                             <?php } ?>
                         </div>
-                        <p id="format_id_error"><?= error('format_ids[]')?></p>
+                        <p id="format_id_error"><?= error('format_ids')?></p>
                     </div>
 
                     <div class="input">

@@ -26,9 +26,7 @@ foreach ($books as $b) {
     <head>
         <?php include 'php/inc/head_content.php'; ?>
         <title>Books</title>
-        <style>
-            .hidden { display: none; }
-        </style>
+
     </head>
     <body>
         <div class="container">
@@ -36,9 +34,49 @@ foreach ($books as $b) {
                 <?php require 'php/inc/flash_message.php'; ?>
                     <a href="book_create.php" class="button">Add New Book</a>
             </div>
-
+        
             <?php if (!empty($books)) { ?>
                 <div class="width-12 filters">
+
+                 <!-- publisher add and delete -->
+                    <div class="admin-dropdown">
+
+                    <button type="button" id="admin_toggle" class="admin-toggle">
+                        Admin Tools ▾
+                    </button>
+
+                    <div id="admin_menu" class="admin-menu hidden">
+
+                        <h3>Publishers</h3>
+
+                        <!-- ADD publisher -->
+                        <form method="POST" action="publisher_controls.php">
+                            <input type="text" name="name" placeholder="Publisher name" required>
+                            <button type="submit" name="action" value="add_publisher" class="add-btn">
+                                Add
+                            </button>
+                        </form>
+
+                        <!-- LIST publishers -->
+                        <div class="admin-list">
+                            <?php foreach (Publisher::findAll() as $p): ?>
+                                <div class="admin-item">
+                                    <span><?= htmlspecialchars($p->name) ?></span>
+
+                                    <form method="POST" action="publisher_controls.php"
+                                        onsubmit="return confirm('Delete this publisher?');">
+                                        <input type="hidden" name="publisher_id" value="<?= $p->id ?>">
+                                        <button type="submit" name="action" value="delete_publisher" class="delete-btn">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                    </div>
+                </div>     
+
                     <form>
                         <div>
                             <label for="title_filter">Title:</label>
@@ -82,7 +120,7 @@ foreach ($books as $b) {
                                         <option value="added_asc">Oldest Added</option>
                                     </select>
                             </div>
-                                                        
+           
 
                         <div class="filter-actions">
                             <button type="button" id="apply_filters">Apply Filters</button>
@@ -92,6 +130,7 @@ foreach ($books as $b) {
                 </div>
             <?php } ?>
         </div>
+        
 
         <div class="container">
             <?php if (empty($books)) { ?>
@@ -137,5 +176,6 @@ foreach ($books as $b) {
             <?php } ?>
         </div>
           <script src="js/book-filters.js"></script>
+          <script src="js/admin-button.js"></script>
     </body>
 </html>

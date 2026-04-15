@@ -62,7 +62,7 @@ class Publisher {
 
         return $publishers;
     }
-    
+
     // Convert to array for JSON output
     public function toArray() {
         return [
@@ -70,4 +70,46 @@ class Publisher {
             'name' => $this->name
         ];
     }
+
+    //added for publisher controls in admin panel
+    
+        // Find publisher by name for adding new publisher (to prevent duplicates)
+    public static function findByName($name) {
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM publishers WHERE name = :name");
+        $stmt->execute(['name' => $name]);
+
+        $row = $stmt->fetch();
+        if ($row) {
+            return new Publisher($row);
+        }
+
+        return null;
+    }
+
+    //save publisher (insert or update)
+    public function save() {
+        if ($this->id) {
+            $stmt = $this->db->prepare("UPDATE publishers SET name = :name WHERE id = :id");
+            $stmt->execute([
+                'name' => $this->name,
+                'id' => $this->id
+            ]);
+        } else {
+            $stmt = $this->db->prepare("INSERT INTO publishers (name) VALUES (:name)");
+            $stmt->execute([
+                'name' => $this->name
+            ]);
+
+            $this->id = $this->db->lastInsertId();
+        }
+    }
+    
+    // Delete publisher (only if not used by any books)
+    public function delete() {
+        $stmt = $this->db->prepare("DELETE FROM publishers WHERE id = :id");
+        $stmt->execute(['id' => $this->id]);
+    }
+
+
 }
