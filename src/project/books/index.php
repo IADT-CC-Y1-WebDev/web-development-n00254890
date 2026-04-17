@@ -11,10 +11,10 @@ catch (PDOException $e) {
     die("<p>PDO Exception: " . $e->getMessage() . "</p>");
 }
 
-//latest id for tag 
+//latest id for tags 
 $latestId = 0;
 
-foreach ($books as $b) {
+foreach ($books as $b) { //loops through books to find latest id for new tag
     if ($b->id > $latestId) {
         $latestId = $b->id;
     }
@@ -49,7 +49,7 @@ foreach ($books as $b) {
 
                         <h3>Publishers</h3>
 
-                        <!-- ADD publisher -->
+                        <!-- Add publisher -->
                         <form method="POST" action="publisher_controls.php">
                             <input type="text" name="name" placeholder="Publisher name" required>
                             <button type="submit" name="action" value="add_publisher" class="add-btn">
@@ -57,12 +57,13 @@ foreach ($books as $b) {
                             </button>
                         </form>
 
-                        <!-- LIST publishers -->
+                        <!-- List publishers -->
                         <div class="admin-list">
                             <?php foreach (Publisher::findAll() as $p): ?>
                                 <div class="admin-item">
                                     <span><?= htmlspecialchars($p->name) ?></span>
 
+                                    <!-- Delete publishers -->
                                     <form method="POST" action="publisher_controls.php"
                                         onsubmit="return confirm('Delete this publisher?');">
                                         <input type="hidden" name="publisher_id" value="<?= $p->id ?>">
@@ -148,13 +149,15 @@ foreach ($books as $b) {
                             <div class="top-content">
                 
                                 <h2>Title: <?= h($book->title) ?>
-                                <?php if ($book->id == $latestId): ?>
+                                <?php if ($book->id == $latestId): ?> // if this book has the latest ID, show tag
+                                     <span class="tag-new">NEW</span>
                                     <span class="tag-new">NEW</span>
                                 <?php endif; ?>
                                 </h2>
                                 <p>Release Year: <?= h($book->year) ?></p>
                                 <p>Author: <?= h($book->author) ?></p>
-                                <p>Formats: <?= h(implode(', ', $book->getFormatNames())) ?></p>
+                                <!-- getFormatNames method from book class used to get format names for display -->
+                                <p>Formats: <?= h(implode(', ', $book->getFormatNames())) ?></p> 
                                 
                             </div>
                             <div class="bottom-content">
