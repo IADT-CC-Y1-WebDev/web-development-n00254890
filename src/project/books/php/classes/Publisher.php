@@ -73,7 +73,7 @@ class Publisher {
 
     //added for publisher controls in admin panel
     
-        // Find publisher by name for adding new publisher (to prevent duplicates)
+    // Find publisher by name for adding new publisher (to prevent duplicates)
     public static function findByName($name) {
         $db = DB::getInstance()->getConnection();
         $stmt = $db->prepare("SELECT * FROM publishers WHERE name = :name");

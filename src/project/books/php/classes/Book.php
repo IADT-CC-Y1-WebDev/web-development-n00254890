@@ -30,7 +30,7 @@ class Book {
         }
     }
 
-    public static function findAll() { //get all books
+    public static function findAll() { //get all books and then loop through to get formats for each book
         $db = DB::getInstance()->getConnection();
 
         $stmt = $db->prepare("SELECT * FROM books ORDER BY title");
@@ -38,17 +38,12 @@ class Book {
 
         $books = []; //array to hold book objects
 
-        while ($row = $stmt->fetch()) {
+        while ($row = $stmt->fetch()) { //loop through each book record and turns each book into an object
 
-            // Create book object 
+            // Create book object and load formats for this book
             $book = new Book($row);
 
-            // Safety check
-            if (!$book->id) {
-                continue;
-            }
-
-            // Load formats for this book
+            // Load formats for this book (returns array of format objects) *join with book_format table*
             $formats = Format::findByBook($book->id);
 
             // Convert to array of IDs using mapping function *easier for js filtering*
@@ -56,11 +51,9 @@ class Book {
                 fn($f) => $f->id,
                 $formats
             );
-
             // Add to result list
             $books[] = $book;
         }
-
         return $books;
     }
 
