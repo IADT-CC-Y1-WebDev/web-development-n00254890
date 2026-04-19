@@ -20,56 +20,40 @@ clearBtn.addEventListener('click', (event) => {
 function applyFilters() {
     let filters = getFilters();
 
-    cards.forEach(card => {
+    for (let i = 0; i != cards.length; i++) {
+        let card = cards[i];
         let match = cardMatches(card, filters);
         card.classList.toggle('hidden', !match);
-    });
-
-    //sort by title alphabetical
+    }
     let cardsArray = Array.from(cards);
-    const sortedTitleCards = sortCards(cardsArray, "title_asc");
-    const sortedDate = sortCardsDate(sortedTitleCards, filters.sortBy);
-
-    sortedDate.forEach(card => {
+    const sorted = sortCards(cardsArray, filters.sortBy);
+    sorted.forEach(card => {
         cardsContainer.appendChild(card);
     });
 }
 
-function sortCards(cards, sortBy) {
-    const list = Array.from(cards);
 
+function sortCards(cards, sortBy) {
+    const list = cards.slice();
+    
     list.sort((a, b) => {
         let titleA = a.dataset.title.toLowerCase();
         let titleB = b.dataset.title.toLowerCase();
+        let dateA = Number(a.dataset.date);
+        let dateB = Number(b.dataset.date);
+        let addedA = Number(a.dataset.added);
+        let addedB = Number(b.dataset.added);
 
-        if (sortBy === "title_desc") return titleB.localeCompare(titleA);
-        return titleA.localeCompare(titleB); // ascending
+        if (sortBy === "date_desc") return dateB - dateA;
+        if (sortBy === "date_asc") return dateA - dateB;
+        if (sortBy === "added_desc") return addedB - addedA;
+        if (sortBy === "added_asc") return addedA - addedB;
+
+        return titleA.localeCompare(titleB);
     });
 
     return list;
 }
-
-    function sortCardsDate(cards, sortBy) {
-
-        return cards.sort((a, b) => {
-
-            //date published
-            let dateA = Number(a.dataset.date);
-            let dateB = Number(b.dataset.date);
-
-            //dateadded
-            let addedA = Number(a.dataset.added);
-            let addedB = Number(b.dataset.added);
-
-            if (sortBy === "date_desc") return dateB - dateA;
-            if (sortBy === "date_asc") return dateA - dateB;
-
-            if (sortBy === "added_desc") return addedB - addedA;
-            if (sortBy === "added_asc") return addedA - addedB;
-
-            return 0;
-        });
-    }
 
 
 function cardMatches(card, filters) {
@@ -92,7 +76,7 @@ function getFilters() {
     const titleEl = form.elements['title_filter'];
     const publisherEl = form.elements['publisher_filter'];
     const formatCheckboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]:checked');
-  const sortBy = form.elements['sort_by'].value || 'date_desc'
+    const sortBy = form.elements['sort_by'].value || 'date_desc';
 
     let titleFilter = (titleEl.value || '').trim().toLowerCase();
     let publisherFilter = publisherEl.value || '';

@@ -28,17 +28,14 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
         <title>Books</title>
 
     </head>
+    
     <body>
         <div class="container">
             <div class="width-12 header">
                 <?php require 'php/inc/flash_message.php'; ?>
                     <a href="book_create.php" class="button">Add New Book</a>
             </div>
-        
-            <?php if (!empty($books)) { ?>
-                <div class="width-12 filters">
-
-                 <!-- publisher add and delete -->
+                         <!-- publisher add and delete -->
                     <div class="admin-dropdown">
 
                     <button type="button" id="admin_toggle" class="admin-toggle">
@@ -76,7 +73,11 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                         </div>
 
                     </div>
-                </div>     
+                </div> 
+                
+            <?php if (!empty($books)) { ?>
+                <div class="width-12 filters">
+    
 
                     <form>
                         <div>
@@ -114,7 +115,7 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                             <div class ="filter-dropdown">
                                 <label for="sort_by">Sort by:</label>
                                     <select id="sort_by" name="sort_by">
-                                        <option value="">Select Date</option>
+                                        <option value="title_asc">Title A–Z</option>
                                         <option value="date_desc">Newest Date</option>
                                         <option value="date_asc">Oldest Date</option>
                                         <option value="added_desc">Newest Added</option>
@@ -142,16 +143,17 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                     <div class="card"
                         data-title="<?= h(strtolower($book->title)) ?>"
                         data-publisher="<?= h($book->publisher_id) ?>"
-                        data-format="<?= h(implode(',', $book->format_ids ?? [])) ?>" // implode turns array into comma-separated string for easier filtering
-                        data-date="<?= strtotime($book->year) ?>" // store year as timestamp for sorting
+                        data-format="<?= h(implode(',', $book->format_ids ?? [])) ?>"
+                        data-date="<?= strtotime($book->year) ?>" 
                         data-added="<?= $book->id ?>">
 
                             <div class="top-content">
                 
                                 <h2>Title: <?= h($book->title) ?>
-                                <?php if ($book->id == $latestId): ?> // if this book has the latest ID, show tag
+                                <?php if ($book->id == $latestId): ?> 
+                                
                                      <span class="tag-new">NEW</span>
-                                    <span class="tag-new">NEW</span>
+
                                 <?php endif; ?>
                                 </h2>
                                 <p>Release Year: <?= h($book->year) ?></p>

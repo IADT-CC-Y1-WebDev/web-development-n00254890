@@ -1,9 +1,8 @@
 let applyBtn = document.getElementById('apply_filters');
 let clearBtn = document.getElementById('clear_filters');
 
-let      = document.getElementById("game_cards");
-let cards = document.querySelectorAll('.card');
-
+let cardsContainer = document.getElementById("game_cards");
+let cards = document.getElementById('.card');
 let form = document.getElementById("filters");
 
 applyBtn.addEventListener('click', (event) => {

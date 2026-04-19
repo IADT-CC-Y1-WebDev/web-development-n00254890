@@ -21,7 +21,7 @@ let descriptionError = document.getElementById('description_error');
 let imageError = document.getElementById('image_error');
 
 let errors = {};
-
+//submits the form if validation passes, otherwise shows errors.
 bookForm.addEventListener('submit', onSubmitForm);
 
 function addError(fieldName, message) {

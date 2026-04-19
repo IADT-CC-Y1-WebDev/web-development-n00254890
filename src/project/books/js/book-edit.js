@@ -19,7 +19,7 @@ let formatIdError = document.getElementById('format_id_error');
 let descriptionError = document.getElementById('description_error');
 
 let errors = {};
-console.log("form:", bookForm);
+
 //submits the form if validation passes, otherwise shows errors.
 bookForm.addEventListener('submit', onSubmitForm);
 function addError(fieldName, message) {
