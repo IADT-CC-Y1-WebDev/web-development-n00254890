@@ -19,23 +19,23 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
         $latestId = $b->id;
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <?php include 'php/inc/head_content.php'; ?>
         <title>Books</title>
-
+        <style>
+            .hidden { display: none; }
+        </style>
     </head>
-    
     <body>
         <div class="container">
             <div class="width-12 header">
                 <?php require 'php/inc/flash_message.php'; ?>
                     <a href="book_create.php" class="button">Add New Book</a>
             </div>
-                         <!-- publisher add and delete -->
+                 <!-- publisher add and delete -->
                     <div class="admin-dropdown">
 
                     <button type="button" id="admin_toggle" class="admin-toggle">
@@ -74,11 +74,9 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
 
                     </div>
                 </div> 
-                
+
             <?php if (!empty($books)) { ?>
                 <div class="width-12 filters">
-    
-
                     <form>
                         <div>
                             <label for="title_filter">Title:</label>
@@ -115,6 +113,7 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                             <div class ="filter-dropdown">
                                 <label for="sort_by">Sort by:</label>
                                     <select id="sort_by" name="sort_by">
+                                        <option value="">Sort by</option>
                                         <option value="title_asc">Title A–Z</option>
                                         <option value="date_desc">Newest Date</option>
                                         <option value="date_asc">Oldest Date</option>
@@ -122,7 +121,7 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                                         <option value="added_asc">Oldest Added</option>
                                     </select>
                             </div>
-           
+                                                        
 
                         <div class="filter-actions">
                             <button type="button" id="apply_filters">Apply Filters</button>
@@ -132,7 +131,6 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                 </div>
             <?php } ?>
         </div>
-        
 
         <div class="container">
             <?php if (empty($books)) { ?>
@@ -144,22 +142,18 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                         data-title="<?= h(strtolower($book->title)) ?>"
                         data-publisher="<?= h($book->publisher_id) ?>"
                         data-format="<?= h(implode(',', $book->format_ids ?? [])) ?>"
-                        data-date="<?= strtotime($book->year) ?>" 
+                        data-date="<?= strtotime($book->year) ?>"
                         data-added="<?= $book->id ?>">
 
                             <div class="top-content">
-                
-                                <h2>Title: <?= h($book->title) ?>
                                 <?php if ($book->id == $latestId): ?> 
-                                
                                      <span class="tag-new">NEW</span>
-
                                 <?php endif; ?>
-                                </h2>
+                                <h2>Title: <?= h($book->title) ?></h2>
                                 <p>Release Year: <?= h($book->year) ?></p>
                                 <p>Author: <?= h($book->author) ?></p>
-                                <!-- getFormatNames method from book class used to get format names for display -->
                                 <p>Formats: <?= h(implode(', ', $book->getFormatNames())) ?></p> 
+
                                 
                             </div>
                             <div class="bottom-content">
@@ -181,6 +175,6 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
             <?php } ?>
         </div>
           <script src="js/book-filters.js"></script>
-          <script src="js/admin-button.js"></script>
+          <Script src="js/admin-button.js"></script>
     </body>
 </html>
