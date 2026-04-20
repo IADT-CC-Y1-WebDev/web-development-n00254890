@@ -74,26 +74,51 @@ function cardMatches(card, filters) {
     let matchTitle = filters.titleFilter === "" || title.includes(filters.titleFilter);
     let matchPublisher = filters.publisherFilter === "" || publisher === filters.publisherFilter;
 
-    let matchFormat =
-        filters.formatFilter.length === 0 ||
-        filters.formatFilter.some(f => cardFormats.includes(f));
+    let matchFormat = true;
+    for (let formatId in filters.formatFilters) {
+        let required = filters.formatFilters[formatId];
+        if (required === 'include' && !cardFormats.includes(formatId)) {
+            matchFormat = false;
+        }
+        else if (required == 'exclude' && cardFormats.includes(formatId)) {
+            matchFormat = false;
+        }
+    }
+        // filters.formatFilter.every(f => cardFormats.includes(f));
     return matchTitle && matchPublisher && matchFormat;
 }
 
 function getFilters() {
     const titleEl = form.elements['title_filter'];
     const publisherEl = form.elements['publisher_filter'];
-    const formatCheckboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]:checked');
+    // const formatCheckboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]:checked');
+
+    const filterDropdown = document.querySelector('.filter-dropdown');
+    let formats = filterDropdown.dataset.formats;
+    formats = formats.split(',').map(f => f.trim()).filter(f => f !== '');
+    let formatFilters = {};
+    formats.forEach(f => {
+        let selected = 'none';
+        let include = document.querySelector('[name=format_' + f + '][value="include"]');
+        let exclude = document.querySelector('[name=format_' + f + '][value="exclude"]');
+        if (include.checked) {
+            selected = "include";
+        }
+        else if (exclude.checked) {
+            selected = 'exclude';
+        }
+        formatFilters[f] = selected;
+    });
     const sortBy = form.elements['sort_by'].value || 'date_desc'
 
     let titleFilter = (titleEl.value || '').trim().toLowerCase();
     let publisherFilter = publisherEl.value || '';
-    let formatFilter = Array.from(formatCheckboxes).map(cb => cb.value);
+    // let formatFilter = Array.from(formatCheckboxes).map(cb => cb.value);
 
     return {
         titleFilter,
         publisherFilter,
-        formatFilter,
+        formatFilters,
         sortBy
     };
 }
@@ -108,7 +133,7 @@ function clearFilters() {
         sortBy: "title_desc"
     };
 
-    document.querySelectorAll('.dropdown-content input[type="checkbox"]')
+    document.querySelectorAll('.dropdown-content input[type="radio"]')
     .forEach(cb => cb.checked = false);
 
     let cardsArray = Array.from(cards);

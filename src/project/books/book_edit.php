@@ -108,8 +108,10 @@ try {
 
                     <div class="input">
                         <label class="special" for="isbn">ISBN:</label>
-                        <input type="text" id="isbn" name="isbn" value="<?= old('isbn', $book->isbn) ?>" required>
-                        <p id="isbn_error"><?= error('isbn')?></p>
+                        <div>
+                            <input type="text" id="isbn" name="isbn" value="<?= old('isbn', $book->isbn) ?>" required>
+                            <p id="isbn_error"><?= error('isbn')?></p>
+                        </div>
                     </div>
 
                     <div class="input">

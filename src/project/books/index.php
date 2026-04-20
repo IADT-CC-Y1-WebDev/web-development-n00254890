@@ -6,6 +6,12 @@ try {
     $books = Book::findAll();
     $publishers = Publisher::findAll();
     $formats = Format::findAll();
+
+    $formatIds = [];
+    foreach ($formats as $f) {
+        $formatIds[] = $f->id;
+    }
+    $formatIdsStr = implode(",", $formatIds);
 } 
 catch (PDOException $e) {
     die("<p>PDO Exception: " . $e->getMessage() . "</p>");
@@ -92,7 +98,7 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                             </select>
                         </div>
 
-                            <div class="filter-dropdown">
+                            <div class="filter-dropdown" data-formats="<?= $formatIdsStr ?>">
                                 <label>Format:</label>
 
                                 <div class="dropdown">
@@ -100,12 +106,22 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                                         Select formats ▾
                                     </button>
                                     <div class="dropdown-content">
-                                        <?php foreach ($formats as $format) { ?>
-                                            <label class="dropdown-item">
-                                                <input type="checkbox" name="format_filter[]" value="<?= h($format->id) ?>">
-                                                <?= h($format->name) ?>
-                                            </label>
-                                        <?php } ?>
+                                        <table>
+                                            <thead><th></th><th>Include</th><th>Exclude</th></tr></thead>
+                                            <tbody>
+                                            <?php foreach ($formats as $format) { ?>
+                                                <tr>
+                                                    <td><label><?= h($format->name) ?></label></td>
+                                                    <td>
+                                                        <input type="radio" name="format_<?= h($format->id) ?>" value="include">
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" name="format_<?= h($format->id) ?>" value="exclude">
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +168,8 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                                 <h2>Title: <?= h($book->title) ?></h2>
                                 <p>Release Year: <?= h($book->year) ?></p>
                                 <p>Author: <?= h($book->author) ?></p>
-                                <p>Formats: <?= h(implode(', ', $book->getFormatNames())) ?></p> 
+                                <p>Formats: <?= h(implode(', ', $book->getFormatNames())) ?></p>
+                                <p>Publishers: <?=h($book->publisher_id) ?></h2>
 
                                 
                             </div>

@@ -58,7 +58,7 @@ catch (PDOException $e) {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <<p id="publisher_id_error"><?= error('publisher_id')?></p>
+                <p id="publisher_id_error"><?= error('publisher_id')?></p>
             </div>
 
             <!-- Year -->
@@ -87,7 +87,7 @@ catch (PDOException $e) {
                         <label><?= h($format->name) ?></label>
                     </div>
                 <?php endforeach; ?>
-                <p id="format_id_error"><?= error('format_ids[]')?></p>
+                <p id="format_id_error"><?= error('format_ids')?></p>
             </div>
 
             <!-- Description -->
@@ -101,7 +101,7 @@ catch (PDOException $e) {
             <div class="input">
                 <label class="special" for="cover">Cover Image:</label>
                 <input type="file" id="cover" name="cover">
-                <p id="image_error"><?= error('image')?></p>
+                <p id="image_error"><?= error('cover')?></p>
             </div>
 
             <div class="input">
