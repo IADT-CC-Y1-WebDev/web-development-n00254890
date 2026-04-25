@@ -107,7 +107,7 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                                     </button>
                                     <div class="dropdown-content">
                                         <table>
-                                            <thead><th></th><th>Include</th><th>Exclude</th></tr></thead>
+                                            <thead><th></th><th class="include">Include</th><th class="exclude">Exclude</th></tr></thead>
                                             <tbody>
                                             <?php foreach ($formats as $format) { ?>
                                                 <tr>

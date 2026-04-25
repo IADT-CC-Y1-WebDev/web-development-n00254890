@@ -11,9 +11,9 @@ let wolf1 = new Wolf("Wolfie", 7);
 let animals = [cat1, dog1, lion1, wolf1];
 
 animals.forEach((animal) => {
-  animal.makeNoise();
-  animal.roam();
-  animal.sleep();
+  console.log(animal.makeNoise());
+  console.log(animal.roam());
+  console.log(animal.sleep());
 
-  console.log("==========");
+  console.log("====");
 });

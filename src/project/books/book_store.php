@@ -30,15 +30,15 @@ try {
     ];
 
     $currentYear = date("Y");
-
+    $data['isbn'] = preg_replace('/[-\s]/', '', $data['isbn']); // Remove dashes and spaces for validation
     $rules = [
-        'title'        => "required|nonempty|min:5|max:255",
-        'author'       => "required|nonempty|min:5|max:255",
-        'publisher_id' => "required|nonempty|integer",
-        'year'         => "required|nonempty|integer|minvalue:1900|maxvalue:$currentYear",
-        'isbn'         => "required|nonempty|min:13|max:13",
-        'format_ids'   => "required|nonempty|array|min:1|max:4",
-        'description'  => "required|nonempty|min:10",
+        'title'        => "required|notempty|min:5|max:255",
+        'author'       => "required|notempty|min:5|max:255",
+        'publisher_id' => "required|notempty|integer",
+        'year'         => "required|notempty|integer|minvalue:1900|maxvalue:$currentYear",
+        'isbn' => 'required|nonempty|regex:/^\d{13}$/',
+        'format_ids'   => "required|notempty|array|min:1|max:4",
+        'description'  => "required|notempty|min:10|max:5000",
         'cover'        => "required|file|image|mimes:jpg,jpeg,png|max_file_size:5242880"
     ];
     

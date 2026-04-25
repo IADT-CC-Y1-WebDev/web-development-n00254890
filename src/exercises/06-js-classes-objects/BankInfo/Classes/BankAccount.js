@@ -1,4 +1,4 @@
-class BankAccount {
+export default class BankAccount {
     constructor(num, name, bal) {
         this.number = num;
         this.name = name;

@@ -8,5 +8,7 @@ const myCarCollection = [bmw, audi, mercedes];
 
 // 5. Loop through and call getExtras()
 myCarCollection.forEach(car => {
-    console.log(`Extras for ${car.make} ${car.model}:`, car.getExtras());
+     console.log(car.toString());
+    console.log("Extras:", car.getExtras());
+    console.log("====");
 });

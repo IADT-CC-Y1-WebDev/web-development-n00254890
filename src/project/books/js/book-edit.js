@@ -69,14 +69,23 @@ function onSubmitForm(evt) {
     errors = {};
 
     // title
+
     if (!isRequired(titleInput.value)) {
         addError('title', 'Title is required.');
+    } else if (titleInput.value.length < 5) {
+        addError('title', 'Title must be at least 5 characters.');
+    } else if (titleInput.value.length > 255) {
+        addError('title', 'Title must not exceed 255 characters.');
     }
     
 
     // author
     if (!isRequired(authorInput.value)) {
-        addError('author', 'Author is required.');
+    addError('author', 'Author is required.');
+    } else if (authorInput.value.length < 5) {
+        addError('author', 'Author must be at least 5 characters.');
+    } else if (authorInput.value.length > 255) {
+        addError('author', 'Author must not exceed 255 characters.');
     }
 
     // publisher
@@ -117,9 +126,14 @@ function onSubmitForm(evt) {
     }
 
     // description
-    if (!isRequired(descriptionInput.value)) {
-        addError('description', 'Description is required.');
+        if (!isRequired(descriptionInput.value)) {
+    addError('description', 'Description is required.');
+    } else if (descriptionInput.value.length < 10) {
+        addError('description', 'Description must be at least 10 characters.');
+    } else if (descriptionInput.value.length > 5000) {
+        addError('description', 'Description must not exceed 5000 characters.');
     }
+
 
     showErrorSummaryTop();
     showFieldErrors();

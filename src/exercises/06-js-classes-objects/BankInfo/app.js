@@ -1,9 +1,10 @@
-import bank from "./classes/BankAccount.js";
+import BankAccount from "./classes/BankAccount.js";
+import SavingsAccount from "./classes/SavingsAccount.js";
+import CurrentAccount from "./classes/CurrentAccount.js";
 
 let bank = new BankAccount("1111111111", "Alice", 100.00);
 let savings = new SavingsAccount("2222222222", "Bob", 500.00, 0.05);
 let current = new CurrentAccount("3333333333", "Charlie", 100.00);
-
 
 current.deposit(50.00);
 current.withdraw(20.00);

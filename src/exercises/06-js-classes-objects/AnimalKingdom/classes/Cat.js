@@ -1,4 +1,4 @@
-import Feline from "Feline.js";
+import Feline from "./Feline.js";
 
 class Cat extends Feline {
     constructor(name, age){

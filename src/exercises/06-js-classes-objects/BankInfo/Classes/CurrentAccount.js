@@ -1,4 +1,6 @@
-class CurrentAccount extends BankAccount {
+import BankAccount from "./BankAccount.js";
+
+export default class CurrentAccount extends BankAccount {
     constructor(num, name, bal) {
         super(num, name, bal);
         this.transactionCount = 0;

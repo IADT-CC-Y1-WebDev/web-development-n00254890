@@ -1,4 +1,4 @@
-import Feline from "Feline.js";
+import Feline from "./Feline.js";
 
 class Lion extends Feline {
     constructor(name, age){
@@ -6,7 +6,7 @@ class Lion extends Feline {
     }
 
     makeNoise(){
-        return `${this.name} roars `;
+         `${this.name} roars `;
     }
 
     sleep(){

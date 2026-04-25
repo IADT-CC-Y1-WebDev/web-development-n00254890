@@ -1,4 +1,4 @@
-import Canine from "Canine.js";
+import Canine from "./Canine.js";
 
 class Wolf extends Canine {
     constructor(name, age){
