@@ -44,7 +44,7 @@ try {
         'author' => 'required|notempty|min:1|max:255',
         'publisher_id' => 'required|notempty|integer',
         'year'=> 'required|notempty|integer|minvalue:1900|maxvalue:'. $year,
-        'isbn' => 'required|nonempty|regex:/^\d{13}$/',
+        'isbn' => 'required|notempty|regex:/^\d{13}$/',
         'description' => 'required|notempty|min:10|max:5000',
         'format_ids' => 'required|array|min:1|max:10',
         'image' => 'file|image|mimes:jpg,jpeg,png|max_file_size:5242880'

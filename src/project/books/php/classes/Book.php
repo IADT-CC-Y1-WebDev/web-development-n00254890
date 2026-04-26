@@ -160,6 +160,10 @@ class Book {
 
     return $names;
 }
-
+//get publisher name for cards
+public function getPublisherName() {
+    $publisher = Publisher::findById($this->publisher_id);
+    return $publisher ? $publisher->name : 'Unknown';
+}
 
 }

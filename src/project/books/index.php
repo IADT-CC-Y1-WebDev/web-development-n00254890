@@ -169,7 +169,7 @@ foreach ($books as $b) { //loops through books to find latest id for new tag
                                 <p>Release Year: <?= h($book->year) ?></p>
                                 <p>Author: <?= h($book->author) ?></p>
                                 <p>Formats: <?= h(implode(', ', $book->getFormatNames())) ?></p>
-                                <p>Publishers: <?=h($book->publisher_id) ?></h2>
+                                <p>Publisher: <?= h($book->getPublisherName()) ?></p>
 
                                 
                             </div>

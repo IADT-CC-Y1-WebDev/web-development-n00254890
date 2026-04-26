@@ -54,7 +54,7 @@ function sortCards(cards, sortBy) {
         if (sortBy === "added_desc") return addedB - addedA;
         if (sortBy === "added_asc") return addedA - addedB;
 
-        if (sortBy === "title_desc") return titleB.localeCompare(titleA);
+        if (sortBy === "title_asc") return titleA.localeCompare(titleB);
 
         return 0;
         
@@ -130,7 +130,7 @@ function clearFilters() {
         titleFilter: "",
         publisherFilter: "",
         formatFilter: [],
-        sortBy: "title_desc"
+        sortBy: "title_asc"
     };
 
     document.querySelectorAll('.dropdown-content input[type="radio"]')

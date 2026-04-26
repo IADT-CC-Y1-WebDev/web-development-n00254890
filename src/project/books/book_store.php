@@ -36,7 +36,7 @@ try {
         'author'       => "required|notempty|min:5|max:255",
         'publisher_id' => "required|notempty|integer",
         'year'         => "required|notempty|integer|minvalue:1900|maxvalue:$currentYear",
-        'isbn' => 'required|nonempty|regex:/^\d{13}$/',
+        'isbn' => 'required|notempty|regex:/^\d{13}$/',
         'format_ids'   => "required|notempty|array|min:1|max:4",
         'description'  => "required|notempty|min:10|max:5000",
         'cover'        => "required|file|image|mimes:jpg,jpeg,png|max_file_size:5242880"
